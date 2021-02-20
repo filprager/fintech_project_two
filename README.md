@@ -5,12 +5,12 @@ Silicon Valley tech entrepreneurs tweets (e.g. from Elon Musk, Jack Dorsey etc) 
 # Features
 A Notebook (or Amazon Lex Chatbot - stretch goal) where a user can choose to analyse the historical stock/crypto price correlation to Twitter sentiment from a selected tech entrepreneur
 # Input
-Tweets from Twitter API
-Keyword searches from Google Analytics API (stretch goal)
-Stock/crypto prices and volumes from Yahoo Finance API (minimum hourly data)
-Entrepreneur’s name from a drop-down list (minimum Elon Musk, Jack Dorsey, Mark Cuban)
-Stock/crypto name and/or ticker (e.g. Bitcoin, BTC)
-Specific time period (start/end date) of the stock/crypto and twitter data.  Alternatively have preset period
+- Tweets from Twitter API
+- Keyword searches from Google Analytics API (stretch goal)
+- Stock/crypto prices and volumes from Yahoo Finance API (minimum hourly data)
+- Entrepreneur’s name from a drop-down list (minimum Elon Musk, Jack Dorsey, Mark Cuban)
+- Stock/crypto name and/or ticker (e.g. Bitcoin, BTC)
+- Specific time period (start/end date) of the stock/crypto and twitter data.  Alternatively have preset period
 # Output
 Keyword, synonyms and associated sentiment of what the selected entrepreneur has said recently in tweets
 Present as Wordcloud
