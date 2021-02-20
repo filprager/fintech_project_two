@@ -1,4 +1,5 @@
 # fintech_project_two
+![Image](https://raw.githubusercontent.com/filprager/fintech_project_two/layout/image/Etm4yFZUcAAoN5u.jpeg)
 
 ## How to run the app
 `python3 main.py`
