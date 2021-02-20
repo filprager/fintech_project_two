@@ -7,7 +7,7 @@
 Silicon Valley tech entrepreneurs tweets (e.g. from Elon Musk, Jack Dorsey etc) have a high correlation to stock/crypto price movements, and that this movement is relatively short term (< 1day)
 
 ## Features
-A Notebook (or Amazon Lex Chatbot - stretch goal) where a user can choose to analyse the historical stock/crypto price correlation to Twitter sentiment from a selected tech entrepreneur
+A web app (or Chatbot - stretch goal) where a user can choose to analyse the historical stock/crypto price correlation to what a selected tech entrepreneur has said recently, and get an auto trading strategy based on it.
 
 ## Input
 * Tweets from Twitter API
@@ -16,15 +16,16 @@ A Notebook (or Amazon Lex Chatbot - stretch goal) where a user can choose to ana
 * Entrepreneur’s name from a drop-down list (minimum Elon Musk, Jack Dorsey, Mark Cuban)
 * Stock/crypto name and/or ticker (e.g. Bitcoin, BTC)
 * Specific time period (start/end date) of the stock/crypto and twitter data.  Alternatively have preset period
+
 ## Output
 * Keyword, synonyms and associated sentiment of what the selected entrepreneur has said recently in tweets 
     - Present as Wordcloud
 * Historical price curve of the chosen stock/crypto
 * Correlation curve between stock/crypto price and tweet sentiment, over time
-* A website/dashboard/download report providing a more detailed analysis (stretch goal)
+* An auto trading strategy, and its backtesting and evaluation results.
 
 ## Work distribution
-* Set up an layout for the code (main.py, dashboard) - Mark
+* Set up a layout for the code (main.py, dashboard) - Mark
 * Fetch data (APIs)  - Marianna
 * Clean data + Process data (including machine learning) -  2-3 people
 * Migrate to AWS - TBC
