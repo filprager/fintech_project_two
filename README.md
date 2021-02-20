@@ -1,5 +1,8 @@
 # fintech_project_two
 
+## How to run the app
+`python3 main.py`
+
 ## Hypothesis / Purpose
 Silicon Valley tech entrepreneurs tweets (e.g. from Elon Musk, Jack Dorsey etc) have a high correlation to stock/crypto price movements, and that this movement is relatively short term (< 1day)
 
@@ -21,7 +24,7 @@ A Notebook (or Amazon Lex Chatbot - stretch goal) where a user can choose to ana
 * A website/dashboard/download report providing a more detailed analysis (stretch goal)
 
 ## Work distribution
-* Set up the layout of the code (main.py, dashboard) - Mark
+* Set up an layout for the code (main.py, dashboard) - Mark
 * Fetch data (APIs)  - Marianna
 * Clean data + Process data (including machine learning) -  2-3 people
 * Migrate to AWS - TBC
