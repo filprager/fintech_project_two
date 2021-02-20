@@ -1,5 +1,8 @@
 # fintech_project_two
 
+## How to run the app
+`python3 main.py`
+
 ## Hypothesis / Purpose
 Silicon Valley tech entrepreneurs tweets (e.g. from Elon Musk, Jack Dorsey etc) have a high correlation to stock/crypto price movements, and that this movement is relatively short term (< 1day)
 
