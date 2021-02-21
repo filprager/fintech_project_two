@@ -4,10 +4,10 @@
 ## How to run the app
 `python3 main.py`
 
-## Hypothesis / Purpose
+## Hypothesis
 Silicon Valley tech entrepreneurs tweets (e.g. from Elon Musk, Jack Dorsey etc) have a high correlation to stock/crypto price movements, and that this movement is relatively short term (< 1day)
 
-## Features
+## Goal
 A web app (or Chatbot - stretch goal) where a user can choose to analyse the historical stock/crypto price correlation to what a selected tech entrepreneur has said recently, and get an auto trading strategy based on it.
 
 ## Input
@@ -23,12 +23,24 @@ A web app (or Chatbot - stretch goal) where a user can choose to analyse the his
     - Present as Wordcloud
 * Historical price curve of the chosen stock/crypto
 * Correlation curve between stock/crypto price and tweet sentiment, over time
-* An auto trading strategy, and its backtesting and evaluation results.
+* Comparison of different models (e.g. Random Forest vs. Neural Network)
+* An algo trading strategy
+    - A plot showing long/short signals
+    - A plot showing cumulative returns
+    - A table showing pottfolio metrics
+
 
 ## Work distribution
 * Set up a layout for the code (main.py, dashboard) - Mark
-* Fetch data (APIs)  - Marianna
-* Clean data + Process data (including machine learning) -  2-3 people
+* Fetch data (APIs) + Clean data  - Marianna
+* Process data (including machine learning) -  3-4 people
+    - Wordcloud
+    - Key words count
+    - Sentiment analysis
+    - Correlation analysis
+    - Algorithmic trading
+        - Random Forest
+        - Neural Network
 * Migrate to AWS - TBC
 
 ## Key Dates
