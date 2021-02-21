@@ -35,5 +35,5 @@ interface = pn.Column(
                         user_input
                     )
 
-# Launch the app in the browser
+# Launch the app in browser
 interface.show()
