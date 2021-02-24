@@ -48,12 +48,3 @@ A web app (or Chatbot - stretch goal) where a user can choose to analyse the his
 * Final code (all bugs addressed) - 5th March, Thursday
 * Final presentation - 6th March, Saturday
 
-<<<<<<< HEAD
-Fils test
-=======
-fils test - this should be the only change
->>>>>>> main
-
-this should be the only change from Mark
-
-this is the change form Shiva ..just to try
