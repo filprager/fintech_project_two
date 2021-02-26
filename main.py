@@ -24,7 +24,7 @@ def analyse(entrepreneur, ticker):
 # Make interactive drop-down lists which users can choose an entrepreneur and stock/crypto from
 user_input = interact_manual(
                                 analyse, 
-                                entrepreneur=['Elon Musk', 'Mark Cuban'], 
+                                entrepreneur=['Elon Musk'], 
                                 ticker=['Bitcoin', 'Dogecoin']
                             )
 
