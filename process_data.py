@@ -1,5 +1,5 @@
 # Take the data, 
-def function2(df):
+def function1():
     plot1 = None
     plot2 = None
     plot3 = None
