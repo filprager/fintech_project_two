@@ -115,3 +115,4 @@ def function1():
     
     
     return plot1, plot2, plot3, table1, table2, table3
+
