@@ -39,6 +39,10 @@ price_doge
 
 
 # %%
+price_doge[['time_convert', 'close']].sort_values('time_convert').set_index('time_convert')
+
+
+# %%
 # Reorder Dogecoin's data from the oldest to the neweset
 price_doge = price_doge.sort_values('time_convert')
 price_doge
@@ -95,7 +99,7 @@ tweet_elon.iloc[0, 0][:13]
 
 
 # %%
-# Change the granularity of time to house  
+# Change the granularity of tweet time to hour  
 time_all = []
 
 for index, row in tweet_elon.iterrows():
@@ -134,7 +138,19 @@ df_combined
 
 # %%
 # Add Dogecoin price to the combined DataFrame
-df_combined = df_combined.join(price_doge, how='outer')
+df_combined = df_combined.join(price_doge, how='inner')
+df_combined
+
+
+# %%
+# Remove NaN
+df_combined = df_combined.dropna()
+df_combined
+
+
+# %%
+# Slice data from 2020
+df_combined = df_combined.loc['2020':]
 df_combined
 
 
@@ -242,6 +258,7 @@ elon_btc
 # Add a column that contain 0 and 1, 0 if the tweet doesn't mention DOGE, 1 if it does
 elon_doge["Does Elon Musk's Tweet Tention the Word DOGE?"] = elon_doge["Elon Musk's Tweet in String"].str.contains('doge', case=False).astype(int)
 elon_doge
+
 
 # Save the DataFrame into a pickle file
 elon_doge.to_pickle('./data/elon_doge.plk')
