@@ -1,6 +1,29 @@
 import pandas as pd
 import hvplot.pandas
 
+# Run all functions below and return their plots
+def process_data():
+    '''
+    Returns: HvPlot object
+    '''
+    
+    # Run all functions 
+    tweeting_price_curve_doge, tweeting_price_curve_btc = make_tweeting_price_curve()
+    cumulative_doge_curve, cumulative_bitcoin_curve = make_cumulative_curve()
+    bitcoin_price_curve, dogecoin_price_curve = make_price_curve()
+    # @TODO: Algo trading based on Random Forest Tree
+    # @TODO: Algo trading based on RNN
+
+    # Return all plots
+    return (
+            tweeting_price_curve_doge,
+            tweeting_price_curve_btc,
+            cumulative_doge_curve, 
+            cumulative_bitcoin_curve,
+            bitcoin_price_curve,
+            dogecoin_price_curve
+            )
+
 # Make a curve that shows tweeting times vs crypto price
 def make_tweeting_price_curve():
     '''
@@ -75,12 +98,6 @@ def make_tweeting_price_curve():
         height=400
     )
 
-
-
-    price_curve_btc
-
-
-    # %%
     # Overlay plots for Bitcoin
     tweeting_price_curve_btc = price_curve_btc * tweeting_point_btc
     tweeting_price_curve_btc.opts(width=1000, title='When Elon Musk tweets about Bitcoin', ylabel='Bitcoin price in $')
@@ -142,12 +159,10 @@ def make_cumulative_curve():
     cumulative_bitcoin_curve =cumulative_returns.hvplot(figsize=(10,5))
 
        
-    return cumulative_doge_curve ,cumulative_bitcoin_curve
+    return cumulative_doge_curve,cumulative_bitcoin_curve
 
 
 def make_price_curve():
-     
-   
     df2=pd.read_pickle("data/elon_btc.plk")
     df2.head()
 
@@ -172,25 +187,4 @@ def make_price_curve():
 
 
     return bitcoin_price_curve, dogecoin_price_curve
-
-
-def function1():
-    plot1 = None
-    plot2 = None
-    plot3 = None
-    table1 = None 
-    table2 = None 
-    table3 = None
-
-    # @TODO: return 1. A wordcloud of what the entrepreneur has said 
-    #               2. An HvPlot plot of the historical price curve of the chosen stock/crypto
-    #               3. An HvPlot plot of the correlation curve between stock/crypto price and tweet sentiment, over time
-    #               4. An HvPlot table of the performance matrix of model1
-    #               5. An HvPlot table of the performance matrix of model2
-    #               6. An HvPlot showing the long/short signals of the trading strategy
-    #               7. An HvPlot showing the lcumulative returns of the trading strategy
-    #               8. An HvPlot table showing the pottfolio metrics of the trading strategy
-    
-    
-    return plot1, plot2, plot3, table1, table2, table3
 

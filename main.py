@@ -3,16 +3,16 @@ from panel.interact import interact_manual
 import panel as pn
 
 # Import self-made functiions
-from process_data import function1
-from build_dashboard import function2
+from process_data import process_data
+from build_dashboard import build_dashboard
 
 # Analyse the correlation between the chosen entrepreneur and stock/crypto
 def analyse(entrepreneur, ticker):
     # Process the data
-    plot1, plot2, plot3, table1, table2, table3 = function1()
+    plot1, plot2, plot3, table1, table2, table3 = process_data()
 
     # Create a dashboard to visualise the data
-    dashboard = function2(plot1, plot2, plot3, table1, table2, table3, entrepreneur, ticker)
+    dashboard = build_dashboard(plot1, plot2, plot3, table1, table2, table3, entrepreneur, ticker)
 
     # Return the dashboard
     return dashboard
