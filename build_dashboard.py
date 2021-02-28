@@ -1,6 +1,6 @@
 import panel as pn
 
-def function2(plot1, plot2, plot3, table1, table2, table3, entrepreneur, ticker):
+def build_dashboard(plot1, plot2, plot3, table1, table2, table3, entrepreneur, ticker):
 
     dashboard = pn.Column(
         f'You have chosen to analyse the correlation between {entrepreneur} and {ticker} prices', 

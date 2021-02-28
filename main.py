@@ -3,16 +3,28 @@ from panel.interact import interact_manual
 import panel as pn
 
 # Import self-made functiions
-from process_data import function_random_forest
-from build_dashboard import function2
+from build_dashboard import build_dashboard
+from process_data import make_tweeting_price_curve, make_cumulative_curve, make_price_curve, function_random_forest
 
 # Analyse the correlation between the chosen entrepreneur and stock/crypto
 def analyse(entrepreneur, ticker):
     # Process the data
-    plot1, plot2, plot3, plot4, plot5, plot6, plot7, table1, table2, table3 = function_random_forest()
+    tweeting_price_curve_doge, tweeting_price_curve_btc = make_tweeting_price_curve()
+    cumulative_return_curve_doge,cumulative_return_curve_btc = make_cumulative_curve()
+    price_curve_btc, price_curve_doge = make_price_curve()
+    # plot1, plot2, plot3, plot4, plot5, plot6, plot7, table1, table2, table3 = function_random_forest()
 
     # Create a dashboard to visualise the data
-    dashboard = function2(plot1, plot2, plot3, table1, table2, table3, entrepreneur, ticker)
+    dashboard = build_dashboard(
+                                tweeting_price_curve_doge, 
+                                tweeting_price_curve_btc, 
+                                cumulative_return_curve_doge, 
+                                cumulative_return_curve_btc, 
+                                price_curve_btc, 
+                                price_curve_doge, 
+                                entrepreneur, 
+                                ticker
+                                )
 
     # Return the dashboard
     return dashboard
