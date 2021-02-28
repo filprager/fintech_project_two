@@ -21,7 +21,8 @@ def make_tweeting_price_curve():
         legend=False,
         ylabel='Price in $',
         width=1000,
-        height=400
+        height=400,
+        shared_axes=False
     )
 
     tweeting_doge
@@ -33,7 +34,8 @@ def make_tweeting_price_curve():
         line_color='lightgray',
         ylabel='Price in $',
         width=1000,
-        height=400
+        height=400,
+        shared_axes=False
     )
 
     price_curve_doge
@@ -60,7 +62,8 @@ def make_tweeting_price_curve():
         legend=False,
         ylabel='Price in $',
         width=1000,
-        height=400
+        height=400,
+        shared_axes=False
     )
 
     tweeting_point_btc
@@ -72,7 +75,8 @@ def make_tweeting_price_curve():
         line_color='lightgray',
         ylabel='Price in $',
         width=1000,
-        height=400
+        height=400,
+        shared_axes=False
     )
 
     # Overlay plots for Bitcoin
@@ -105,7 +109,7 @@ def make_cumulative_curve():
     cumulative_returns.head()
     
     # Plot the daily returns of the S&P 500 over the last 5 years
-    cumulative_doge_curve =cumulative_returns.hvplot(figsize=(10,5))
+    cumulative_doge_curve =cumulative_returns.hvplot(figsize=(10,5), shared_axes=False)
     
     
     df2=pd.read_pickle("data/elon_btc.plk")
@@ -133,7 +137,7 @@ def make_cumulative_curve():
 
 
     # Plot the daily returns of the S&P 500 over the last 2 years
-    cumulative_bitcoin_curve =cumulative_returns.hvplot(figsize=(10,5))
+    cumulative_bitcoin_curve =cumulative_returns.hvplot(figsize=(10,5), shared_axes=False)
 
        
     return cumulative_doge_curve,cumulative_bitcoin_curve
@@ -148,7 +152,7 @@ def make_price_curve():
   
     #Historical price curve of the chosen bitcoin
     
-    bitcoin_price_curve = df2.Bitcoin_Price.hvplot()
+    bitcoin_price_curve = df2.Bitcoin_Price.hvplot(shared_axes=False)
      
  
     df1= pd.read_pickle("data/elon_doge.plk")
@@ -160,7 +164,7 @@ def make_price_curve():
 
     #Historical price curve of the chosen stock/crypto- ST
 
-    dogecoin_price_curve=df1.Dogecoin_price.hvplot()
+    dogecoin_price_curve=df1.Dogecoin_price.hvplot(shared_axes=False)
 
 
     return bitcoin_price_curve, dogecoin_price_curve
@@ -174,21 +178,16 @@ def function_random_forest():
     import numpy as np
     from pathlib import Path
     import hvplot.pandas
-#     %matplotlib inline
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.datasets import make_classification
 
-#     import warnings
-#     warnings.filterwarnings('ignore')
-
-    plot1 = None
-    plot2 = None
-    plot3 = None
-    plot4 = None
-    plot5 = None
-    plot6 = None
-    plot7 = None
-    table1 = None 
-    table2 = None 
-    table3 = None
+    rf_plot1 = None
+    rf_plot2 = None
+    rf_plot3 = None
+    rf_plot4 = None
+    rf_plot5 = None
+    rf_plot6 = None
+    rf_plot7 = None
 
     # Set path to Pickle and read in data
     trading_signals_df= pd.read_pickle("data/elon_btc.plk")
@@ -210,7 +209,7 @@ def function_random_forest():
     trading_signals_df['crossover_signal'] = trading_signals_df['crossover_long'] + trading_signals_df['crossover_short']
 
     # Plot the EMA of BTC/USD closing prices
-    plot1 = trading_signals_df[['Bitcoin Price', 'fast_close', 'slow_close']].plot(figsize=(20,10))
+    rf_plot1 = trading_signals_df[['Bitcoin Price', 'fast_close', 'slow_close']].hvplot(title="Title - change me", xlabel="X label - change me", ylabel="Y label - change me", width = 800, height = 400, shared_axes=False).opts(yformatter="%.1f")
     
     # Set short and long volatility windows
     short_vol_window = 1
@@ -226,7 +225,7 @@ def function_random_forest():
     trading_signals_df['vol_trend_signal'] = trading_signals_df['vol_trend_long'] + trading_signals_df['vol_trend_short']
 
     # Plot the EMA of BTC/USD daily return volatility
-    plot2 = trading_signals_df[['fast_vol', 'slow_vol']].plot(figsize=(20,10))
+    rf_plot2 = trading_signals_df[['fast_vol', 'slow_vol']].hvplot(title="Title - change me", xlabel="X label - change me", ylabel="Y label - change me", width = 800, height = 400, shared_axes=False).opts(yformatter="%.1f")
     
     # Set bollinger band window
     bollinger_window = 20
@@ -245,7 +244,7 @@ def function_random_forest():
     trading_signals_df['bollinger_signal'] = trading_signals_df['bollinger_long'] + trading_signals_df['bollinger_short']
 
     # Plot the Bollinger Bands for BTC/USD closing prices
-    plot3 = trading_signals_df[['Bitcoin Price','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].plot(figsize=(20,10))
+    rf_plot3 = trading_signals_df[['Bitcoin Price','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].hvplot(title="Title - change me", xlabel="X label - change me", ylabel="Y label - change me", width = 800, height = 400, shared_axes=False).opts(yformatter="%.1f")
 
     # Set x variable list of features
     x_var_list = ['crossover_signal', 'vol_trend_signal', 'bollinger_signal']
@@ -274,11 +273,6 @@ def function_random_forest():
     # Construct testing start and end dates
     testing_start =  '2021-01-30'
     testing_end = trading_signals_df.index.max().strftime(format= '%Y-%m-%d')
-    # # Print training and testing start/end dates
-    # print(f"Training Start: {training_start}")
-    # print(f"Training End: {training_end}")
-    # print(f"Testing Start: {testing_start}")
-    # print(f"Testing End: {testing_end}")
 
     # Construct the x train and y train datasets
     x_train = trading_signals_df[x_var_list][training_start:training_end]
@@ -291,9 +285,6 @@ def function_random_forest():
     y_test = trading_signals_df['Positive Return'][testing_start:testing_end]
     # x_test.tail()
     # y_test.tail()
-
-    from sklearn.ensemble import RandomForestClassifier
-    from sklearn.datasets import make_classification
 
     # Fit a SKLearn linear regression using just the training set (x_train, y_train):
     model = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=0)
@@ -314,27 +305,27 @@ def function_random_forest():
     # results.tail()
 
     # Plot predicted results vs. actual results
-    plot4 = results[['Actual Value', 'Predicted Value']].plot(figsize=(20,10))
+    rf_plot4 = results[['Actual Value', 'Predicted Value']].hvplot(title="Title - change me", xlabel="X label - change me", ylabel="Y label - change me", width = 800, height = 400, shared_axes=False).opts(yformatter="%.1f")
 
     # Plot last 10 records of predicted vs. actual results
-    plot5 = results[['Actual Value', 'Predicted Value']].tail(10).plot()
+    rf_plot5 = results[['Actual Value', 'Predicted Value']].tail(10).hvplot(title="Title - change me", xlabel="X label - change me", ylabel="Y label - change me", width = 800, height = 400, shared_axes=False).opts(yformatter="%.1f")
 
     # Replace predicted values 0 to -1 to account for shorting
     results['Predicted Value'].replace(0, -1, inplace=True)
     # results.tail()
 
     # Calculate cumulative return of model and plot the result
-    plot6 = (1 + (results['daily_return'] * results['Predicted Value'])).cumprod().plot()
-
+    rf_plot6 = (1 + (results['daily_return'] * results['Predicted Value'])).cumprod().hvplot(title="Title - change me", xlabel="X label - change me", ylabel="Y label - change me", width = 800, height = 400, shared_axes=False).opts(yformatter="%.1f")
+    
     # Set initial capital allocation
     initial_capital = 100000  ## <- replace this with user entered value!
 
     # Plot cumulative return of model in terms of capital
     cumulative_return_capital = initial_capital * (1 + (results['daily_return'] * results['Predicted Value'])).cumprod()
-    plot7 = cumulative_return_capital.plot()
+    rf_plot7 = cumulative_return_capital.hvplot(title="Title - change me", xlabel="X label - change me", ylabel="Y label - change me", width = 800, height = 400, shared_axes=False).opts(yformatter="%.1f")
     
     
-    return plot1, plot2, plot3, plot4, plot5, plot6, plot7, table1, table2, table3
+    return rf_plot1, rf_plot2, rf_plot3, rf_plot4, rf_plot5, rf_plot6, rf_plot7
 
 
 
