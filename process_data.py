@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-# Create the Random Forest function
-def function_random_forest():
-=======
-import pandas as pd
-import hvplot.pandas
+
 
 # Make a curve that shows tweeting times vs crypto price
 def make_tweeting_price_curve():
@@ -178,18 +173,8 @@ def make_price_curve():
     return bitcoin_price_curve, dogecoin_price_curve
 
 
-def function1():
->>>>>>> main
-    plot1 = None
-    plot2 = None
-    plot3 = None
-    plot4 = None
-    plot5 = None
-    plot6 = None
-    plot7 = None
-    table1 = None 
-    table2 = None 
-    table3 = None
+# Create the Random Forest function
+def function_random_forest():
 
     # @TODO: return 1. A wordcloud of what the entrepreneur has said 
     #               2. An HvPlot plot of the historical price curve of the chosen stock/crypto
@@ -201,16 +186,26 @@ def function1():
     #               8. An HvPlot table showing the pottfolio metrics of the trading strategy
     
     
-<<<<<<< HEAD
     # Import libraries and dependencies
     import pandas as pd
     import numpy as np
     from pathlib import Path
+    import hvplot.pandas
 #     %matplotlib inline
 
 #     import warnings
 #     warnings.filterwarnings('ignore')
 
+    plot1 = None
+    plot2 = None
+    plot3 = None
+    plot4 = None
+    plot5 = None
+    plot6 = None
+    plot7 = None
+    table1 = None 
+    table2 = None 
+    table3 = None
 
     # Set path to Pickle and read in data
     trading_signals_df= pd.read_pickle("data/elon_btc.plk")
@@ -382,7 +377,4 @@ def function_neural_network():
     ##### MARIANNAS STUFF HERE ######
     
     return plot1, plot2, plot3, table1, table2, table3
-=======
-    return plot1, plot2, plot3, table1, table2, table3
 
->>>>>>> main
