@@ -173,11 +173,22 @@ def function_random_forest():
     import pandas as pd
     import numpy as np
     from pathlib import Path
+    import hvplot.pandas
 #     %matplotlib inline
 
 #     import warnings
 #     warnings.filterwarnings('ignore')
 
+    plot1 = None
+    plot2 = None
+    plot3 = None
+    plot4 = None
+    plot5 = None
+    plot6 = None
+    plot7 = None
+    table1 = None 
+    table2 = None 
+    table3 = None
 
     # Set path to Pickle and read in data
     trading_signals_df= pd.read_pickle("data/elon_btc.plk")
