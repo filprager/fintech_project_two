@@ -12,7 +12,7 @@ def analyse(entrepreneur, ticker):
     tweeting_price_curve_doge, tweeting_price_curve_btc = make_tweeting_price_curve()
     cumulative_return_curve_doge,cumulative_return_curve_btc = make_cumulative_curve()
     price_curve_btc, price_curve_doge = make_price_curve()
-    # plot1, plot2, plot3, plot4, plot5, plot6, plot7, table1, table2, table3 = function_random_forest()
+    rf_plot1, rf_plot2, rf_plot3, rf_plot4, rf_plot5, rf_plot6, rf_plot7 = function_random_forest()
 
     # Create a dashboard to visualise the data
     dashboard = build_dashboard(
@@ -22,8 +22,14 @@ def analyse(entrepreneur, ticker):
                                 cumulative_return_curve_btc, 
                                 price_curve_btc, 
                                 price_curve_doge, 
-                                entrepreneur, 
-                                ticker
+                                rf_plot1,
+                                rf_plot2,
+                                rf_plot3,
+                                rf_plot4,
+                                rf_plot5,
+                                rf_plot6,
+                                rf_plot7
+                                # Add more plots here, remember to match the build_dashboard file too
                                 )
 
     # Return the dashboard
@@ -38,8 +44,9 @@ user_input = interact_manual(
 
 # Make the interface for the app
 interface = pn.Column(
-                        '## Analyse the correlation between your chosen entrepreneur and stock/crypto',
-                        '### Feel free to add whatever you want to display here : )', 
+                        '# SillyCon App',
+                        '## Analyse correlations between Silicon Valley Entrepreneurs Tweets and Crypto Prices',
+                        '### Select your Entrepreneur and Crypto pair, then press Run Interact', 
                         user_input
                     )
 
