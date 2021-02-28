@@ -1,15 +1,95 @@
-# Take the data, 
-#This function makes the cumulative return curves for both dogecoin and bitcoin
 import pandas as pd
-
 import hvplot.pandas
 
+# Make a curve that shows tweeting times vs crypto price
+def make_tweeting_price_curve():
+    '''
+    Return: HvPlot object
+    '''
 
- 
-def make_cumulative_curve():
-       
-    
-                      
+    # Load data for Dogecoin
+    df_elon_doge = pd.read_pickle('./data/elon_doge.plk')
+    df_elon_doge
+
+
+    # %%
+    # Visualize tweeting times for Dogecoin
+    tweeting_doge = df_elon_doge[df_elon_doge["Does Elon Musk's Tweet Tention the Word DOGE?"] == 1]['Dogecoin Price'].hvplot.scatter(
+        color='royalblue',
+        marker='circle',
+        size=50,
+        legend=False,
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+    tweeting_doge
+
+
+    # %%
+    # Visualize close price of Dogecoin
+    price_curve_doge = df_elon_doge[['Dogecoin Price']].hvplot(
+        line_color='lightgray',
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+    price_curve_doge
+
+
+    # %%
+    # Overlay plots for Dogecoin
+    tweeting_price_curve_doge = price_curve_doge * tweeting_doge
+    tweeting_price_curve_doge.opts(width=1000, title='When Elon Musk tweets about Dogecoin', ylabel='Dogecoin price in $')
+
+
+    # %%
+    # Load data for Bitcoin
+    df_elon_btc = pd.read_pickle('./data/elon_btc.plk')
+    df_elon_btc
+
+
+    # %%
+    # Visualize tweeting times for Bitcoin
+    tweeting_point_btc = df_elon_btc[df_elon_btc["Does Elon Musk's Tweet Tention the Word Bitcoin or BTC?"] == 1]['Bitcoin Price'].hvplot.scatter(
+        color='royalblue',
+        marker='circle',
+        size=50,
+        legend=False,
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+    tweeting_point_btc
+
+
+    # %%
+    # Visualize close price of Bitcoin
+    price_curve_btc = df_elon_btc[['Bitcoin Price']].hvplot(
+        line_color='lightgray',
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+
+
+    price_curve_btc
+
+
+    # %%
+    # Overlay plots for Bitcoin
+    tweeting_price_curve_btc = price_curve_btc * tweeting_point_btc
+    tweeting_price_curve_btc.opts(width=1000, title='When Elon Musk tweets about Bitcoin', ylabel='Bitcoin price in $')
+
+    # Return tweeting vs price curves
+    return tweeting_price_curve_doge, tweeting_price_curve_btc
+
+
+def make_cumulative_curve():                   
     df1= pd.read_pickle("data/elon_doge.plk")
     df1.head()
 
@@ -63,8 +143,6 @@ def make_cumulative_curve():
 
        
     return cumulative_doge_curve ,cumulative_bitcoin_curve
-
-# Historical price curves start from here:
 
 
 def make_price_curve():
