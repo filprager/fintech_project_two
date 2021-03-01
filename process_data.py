@@ -111,7 +111,12 @@ def make_cumulative_curve():
     cumulative_returns.head()
     
     # Plot the daily returns of the S&P 500 over the last 5 years
-    cumulative_doge_curve =cumulative_returns.hvplot(figsize=(10,5), shared_axes=False)
+    cumulative_doge_curve =cumulative_returns.hvplot(
+        figsize=(10,5),
+        title='Cumulative Returns for Dogeoin',
+        ylabel='% Change in Dogecoin Price',
+        shared_axes=False
+    )
     
     
     df2=pd.read_pickle("data/elon_btc.plk")
@@ -139,7 +144,12 @@ def make_cumulative_curve():
 
 
     # Plot the daily returns of the S&P 500 over the last 2 years
-    cumulative_bitcoin_curve =cumulative_returns.hvplot(figsize=(10,5), shared_axes=False)
+    cumulative_bitcoin_curve =cumulative_returns.hvplot(
+        figsize=(10,5),
+        title='Cumulative Returns for Bitcoin',
+        ylabel='% Change in Bitcoin Price',
+        shared_axes=False
+    )
 
        
     return cumulative_doge_curve,cumulative_bitcoin_curve
@@ -154,7 +164,11 @@ def make_price_curve():
   
     #Historical price curve of the chosen bitcoin
     
-    bitcoin_price_curve = df2.Bitcoin_Price.hvplot(shared_axes=False)
+    bitcoin_price_curve = df2.Bitcoin_Price.hvplot(
+        ylabel='Price in $',
+        title = 'Bitcoin Price',
+        shared_axes=False
+    )
      
  
     df1= pd.read_pickle("data/elon_doge.plk")
@@ -166,7 +180,11 @@ def make_price_curve():
 
     #Historical price curve of the chosen stock/crypto- ST
 
-    dogecoin_price_curve=df1.Dogecoin_price.hvplot(shared_axes=False)
+    dogecoin_price_curve=df1.Dogecoin_price.hvplot(
+        ylabel='Price in $',
+        title = 'Dogecoin Price',
+        shared_axes=False
+    )
 
 
     return bitcoin_price_curve, dogecoin_price_curve
