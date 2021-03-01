@@ -259,6 +259,15 @@ elon_btc
 elon_doge["Does Elon Musk's Tweet Tention the Word DOGE?"] = elon_doge["Elon Musk's Tweet in String"].str.contains('doge', case=False).astype(int)
 elon_doge
 
+# Remove data gap for Bitcoin
+elon_btc["Bitcoin Price"].index[0]
+elon_btc = elon_btc.drop(index=elon_btc["Bitcoin Price"].index[0])
+
+# Remove data gap for Dogecoin
+elon_doge["Dogecoin Price"].index[0]
+elon_doge = elon_doge.drop(index=elon_doge["Dogecoin Price"].index[0])
+elon_doge
+
 
 # Save the DataFrame into a pickle file
 elon_doge.to_pickle('./data/elon_doge.plk')
