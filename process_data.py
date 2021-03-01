@@ -1,5 +1,7 @@
 import pandas as pd
 import hvplot.pandas
+import numpy as np
+
 
 # Make a curve that shows tweeting times vs crypto price
 def make_tweeting_price_curve():
@@ -328,6 +330,329 @@ def function_random_forest():
     return rf_plot1, rf_plot2, rf_plot3, rf_plot4, rf_plot5, rf_plot6, rf_plot7
 
 
+# Create the algo trading program based on a fixed startegy
+# i.e. buy when Elon tweets and sell after 24 hours
+def algo_trading_fixed_strategy():
+    # Load Dogecoin data
+    df_doge = pd.read_pickle('./data/elon_doge.plk')
+    df_doge
+
+    # Slice only the columns needed
+    signals_df_doge = df_doge[['Dogecoin Price', "Does Elon Musk's Tweet Tention the Word DOGE?"]].copy()
+    signals_df_doge
+
+    # Create a Entry column, 1 for entry, 0 for hold
+    signals_df_doge['Entry'] = signals_df_doge["Does Elon Musk's Tweet Tention the Word DOGE?"]
+    signals_df_doge
+
+    # Create an Exit column, -1 for Exit, 0 for hold
+
+    # Set Exit time as 24 hours after Entry
+    signals_df_doge['Exit'] = signals_df_doge['Entry'].shift(24)
+    signals_df_doge['Exit'] = signals_df_doge['Exit'].replace(1, -1)
+    signals_df_doge
+
+    # Create an Extry/Exit column
+    signals_df_doge['Entry/Exit'] = signals_df_doge['Entry'] + signals_df_doge['Exit']
+    signals_df_doge['Entry/Exit'] = signals_df_doge['Entry/Exit'].fillna(0)
+    signals_df_doge
+
+    # Visualize exit position relative to close price
+    exit = signals_df_doge[signals_df_doge['Entry/Exit'] == -1.0]['Dogecoin Price'].hvplot.scatter(
+        color='red',
+        legend=False,
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+    # Visualize entry position relative to close price
+    entry = signals_df_doge[signals_df_doge['Entry/Exit'] == 1.0]['Dogecoin Price'].hvplot.scatter(
+        color='green',
+        legend=False,
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+    # Visualize close price for the investment
+    security_close = signals_df_doge[['Dogecoin Price']].hvplot(
+        line_color='lightgray',
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+
+    # Overlay plots
+    entry_exit_price_plot_doge = security_close * entry * exit
+    entry_exit_price_plot_doge.opts(width=1000, title='Entry/Exit vs Price')
+
+    # Set initial capital
+    initial_capital = float(100000)
+
+    # Set the share size
+    share_size = 2000000
+
+    # Find the points in time where a 500 share position is bought or sold
+    signals_df_doge['Entry/Exit Position'] = share_size * signals_df_doge['Entry/Exit']
+
+    # Multiply share price by entry/exit positions and get the cumulatively sum
+    signals_df_doge['Portfolio Holdings'] = signals_df_doge['Dogecoin Price'] * signals_df_doge['Entry/Exit Position'].cumsum()
+
+    # Subtract the initial capital by the portfolio holdings to get the amount of liquid cash in the portfolio
+    signals_df_doge['Portfolio Cash'] = initial_capital - (signals_df_doge['Dogecoin Price'] * signals_df_doge['Entry/Exit Position']).cumsum()
+
+    # Get the total portfolio value by adding the cash amount by the portfolio holdings (or investments)
+    signals_df_doge['Portfolio Total'] = signals_df_doge['Portfolio Cash'] + signals_df_doge['Portfolio Holdings']
+
+    # Calculate the portfolio daily returns
+    signals_df_doge['Portfolio Hourly Returns'] = signals_df_doge['Portfolio Total'].pct_change()
+
+    # Calculate the cumulative returns
+    signals_df_doge['Portfolio Cumulative Returns'] = (1 + signals_df_doge['Portfolio Hourly Returns']).cumprod() - 1
+
+    # Print the DataFrame
+    signals_df_doge
+
+
+
+    # Visualize exit position relative to total portfolio value
+    exit = signals_df_doge[signals_df_doge['Entry/Exit'] == -1.0]['Portfolio Total'].hvplot.scatter(
+        color='red',
+        legend=False,
+        ylabel='Total Portfolio Value',
+        width=1000,
+        height=400
+    )
+
+    # Visualize entry position relative to total portfolio value
+    entry = signals_df_doge[signals_df_doge['Entry/Exit'] == 1.0]['Portfolio Total'].hvplot.scatter(
+        color='green',
+        legend=False,
+        ylabel='Total Portfolio Value',
+        width=1000,
+        height=400
+    )
+
+    # Visualize total portoflio value for the investment
+    total_portfolio_value = signals_df_doge[['Portfolio Total']].hvplot(
+        line_color='lightgray',
+        ylabel='Total Portfolio Value',
+        width=1000,
+        height=400
+    )
+
+    # Overlay plots
+    entry_exit_portfolio_plot_doge = total_portfolio_value * entry * exit
+    entry_exit_portfolio_plot_doge.opts(width=1000, title='Entry/Exit vs Total Portfolio Value')
+
+    # Prepare DataFrame for metrics
+    metrics = [
+        'Annual Return',
+        'Cumulative Returns',
+        'Annual Volatility',
+        'Sharpe Ratio'
+        ]
+
+    columns = ['Backtest']
+
+    # Initialize the DataFrame with index set to evaluation metrics and column as `Backtest` (just like PyFolio)
+    portfolio_evaluation_df = pd.DataFrame(index=metrics, columns=columns)
+    portfolio_evaluation_df
+
+    # Calculate cumulative return
+    portfolio_evaluation_df.loc['Cumulative Returns'] = signals_df_doge['Portfolio Cumulative Returns'][-1]
+
+
+    # Calculate annualized return
+    portfolio_evaluation_df.loc['Annual Return'] = (
+        signals_df_doge['Portfolio Hourly Returns'].mean() * 252 *24
+    )
+
+    # Calculate annual volatility
+    portfolio_evaluation_df.loc['Annual Volatility'] = (
+        signals_df_doge['Portfolio Hourly Returns'].std() * np.sqrt(252*24)
+    )
+
+    # Calculate Sharpe Ratio
+    portfolio_evaluation_df.loc['Sharpe Ratio'] = (
+        signals_df_doge['Portfolio Hourly Returns'].mean() * 252*24) / (
+        signals_df_doge['Portfolio Hourly Returns'].std() * np.sqrt(252*24)
+    )
+
+    portfolio_evaluation_df
+
+    # Convert portfolio evaluation matrics to an Hvplot table
+    portfolio_evaluation_df.reset_index(inplace=True)
+    portfolio_evaluation_table_doge = portfolio_evaluation_df.hvplot.table(title='Portfolio Evaluation Metrics')
+    portfolio_evaluation_table_doge
+
+
+
+    # Load Bitcoin data
+    df_btc = pd.read_pickle('./data/elon_btc.plk')
+    df_btc
+
+    # Slice only the columns needed
+    signals_df_btc = df_btc[['Bitcoin Price', "Does Elon Musk's Tweet Tention the Word Bitcoin or BTC?"]].copy()
+    signals_df_btc
+
+    # Create a Entry column, 1 for entry, 0 for hold
+    signals_df_btc['Entry'] = signals_df_btc["Does Elon Musk's Tweet Tention the Word Bitcoin or BTC?"]
+    signals_df_btc
+
+    # Create an Exit column, -1 for Exit, 0 for hold
+    # Set Exit time as 24 hours after Entry
+    signals_df_btc['Exit'] = signals_df_btc['Entry'].shift(24)
+    signals_df_btc['Exit'] = signals_df_btc['Exit'].replace(1, -1)
+    signals_df_btc
+
+    # Create an Extry/Exit column
+    signals_df_btc['Entry/Exit'] = signals_df_btc['Entry'] + signals_df_btc['Exit']
+    signals_df_btc['Entry/Exit'] = signals_df_btc['Entry/Exit'].fillna(0)
+    signals_df_btc
+
+    # Visualize exit position relative to close price
+    exit = signals_df_btc[signals_df_btc['Entry/Exit'] == -1.0]['Bitcoin Price'].hvplot.scatter(
+        color='red',
+        legend=False,
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+    # Visualize entry position relative to close price
+    entry = signals_df_btc[signals_df_btc['Entry/Exit'] == 1.0]['Bitcoin Price'].hvplot.scatter(
+        color='green',
+        legend=False,
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+    # Visualize close price for the investment
+    security_close = signals_df_btc[['Bitcoin Price']].hvplot(
+        line_color='lightgray',
+        ylabel='Price in $',
+        width=1000,
+        height=400
+    )
+
+
+    # Overlay plots
+    entry_exit_price_plot_btc = security_close * entry * exit
+    entry_exit_price_plot_btc.opts(width=1000, title='Entry/Exit vs Price')
+
+    # Set initial capital
+    initial_capital = float(100000)
+
+    # Set the share size
+    share_size = 3
+
+    # Find the points in time where a 500 share position is bought or sold
+    signals_df_btc['Entry/Exit Position'] = share_size * signals_df_btc['Entry/Exit']
+
+    # Multiply share price by entry/exit positions and get the cumulatively sum
+    signals_df_btc['Portfolio Holdings'] = signals_df_btc['Bitcoin Price'] * signals_df_btc['Entry/Exit Position'].cumsum()
+
+    # Subtract the initial capital by the portfolio holdings to get the amount of liquid cash in the portfolio
+    signals_df_btc['Portfolio Cash'] = initial_capital - (signals_df_btc['Bitcoin Price'] * signals_df_btc['Entry/Exit Position']).cumsum()
+
+    # Get the total portfolio value by adding the cash amount by the portfolio holdings (or investments)
+    signals_df_btc['Portfolio Total'] = signals_df_btc['Portfolio Cash'] + signals_df_btc['Portfolio Holdings']
+
+    # Calculate the portfolio daily returns
+    signals_df_btc['Portfolio Hourly Returns'] = signals_df_btc['Portfolio Total'].pct_change()
+
+    # Calculate the cumulative returns
+    signals_df_btc['Portfolio Cumulative Returns'] = (1 + signals_df_btc['Portfolio Hourly Returns']).cumprod() - 1
+
+    # Print the DataFrame
+    signals_df_btc
+
+    # Visualize exit position relative to total portfolio value
+    exit = signals_df_btc[signals_df_btc['Entry/Exit'] == -1.0]['Portfolio Total'].hvplot.scatter(
+        color='red',
+        legend=False,
+        ylabel='Total Portfolio Value',
+        width=1000,
+        height=400
+    )
+
+    # Visualize entry position relative to total portfolio value
+    entry = signals_df_btc[signals_df_btc['Entry/Exit'] == 1.0]['Portfolio Total'].hvplot.scatter(
+        color='green',
+        legend=False,
+        ylabel='Total Portfolio Value',
+        width=1000,
+        height=400
+    )
+
+    # Visualize total portoflio value for the investment
+    total_portfolio_value = signals_df_btc[['Portfolio Total']].hvplot(
+        line_color='lightgray',
+        ylabel='Total Portfolio Value',
+        width=1000,
+        height=400
+    )
+
+    # Overlay plots
+    entry_exit_portfolio_plot_btc = total_portfolio_value * entry * exit
+    entry_exit_portfolio_plot_btc.opts(width=1000, title='Entry/Exit vs Total Portfolio Value')
+
+    # Prepare DataFrame for metrics
+    metrics = [
+        'Annual Return',
+        'Cumulative Returns',
+        'Annual Volatility',
+        'Sharpe Ratio'
+        ]
+
+    columns = ['Backtest']
+
+    # Initialize the DataFrame with index set to evaluation metrics and column as `Backtest` (just like PyFolio)
+    portfolio_evaluation_df = pd.DataFrame(index=metrics, columns=columns)
+    portfolio_evaluation_df
+
+    # Calculate cumulative return
+    portfolio_evaluation_df.loc['Cumulative Returns'] = signals_df_btc['Portfolio Cumulative Returns'][-1]
+
+
+    # Calculate annualized return
+    portfolio_evaluation_df.loc['Annual Return'] = (
+        signals_df_btc['Portfolio Hourly Returns'].mean() * 252 *24
+    )
+
+    # Calculate annual volatility
+    portfolio_evaluation_df.loc['Annual Volatility'] = (
+        signals_df_btc['Portfolio Hourly Returns'].std() * np.sqrt(252*24)
+    )
+
+    # Calculate Sharpe Ratio
+    portfolio_evaluation_df.loc['Sharpe Ratio'] = (
+        signals_df_btc['Portfolio Hourly Returns'].mean() * 252*24) / (
+        signals_df_btc['Portfolio Hourly Returns'].std() * np.sqrt(252*24)
+    )
+
+    portfolio_evaluation_df
+
+    # Make a portfolio evaluation matrix table
+    portfolio_evaluation_df.reset_index(inplace=True)
+    portfolio_evaluation_table_btc = portfolio_evaluation_df.hvplot.table(title='Portfolio Evaluation Metrics')
+    portfolio_evaluation_table_btc
+
+    # Return plots
+    return (
+        entry_exit_price_plot_doge,
+        entry_exit_portfolio_plot_doge,
+        portfolio_evaluation_table_doge,
+        entry_exit_price_plot_btc,
+        entry_exit_portfolio_plot_btc,
+        portfolio_evaluation_table_btc
+    )
+
+  
 
 # Create the Neural Network function
 def function_neural_network():
