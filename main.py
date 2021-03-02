@@ -2,19 +2,42 @@
 from panel.interact import interact_manual
 import panel as pn
 
-# Import self-made functiions
+# Import self-made functions
 from build_dashboard import build_dashboard
-from process_data import make_tweeting_price_curve, make_cumulative_curve, make_price_curve, function_random_forest
+from process_data import make_tweeting_price_curve, make_cumulative_curve, make_price_curve, make_random_forest
 
-# Analyse the correlation between the chosen entrepreneur and stock/crypto
-def analyse(entrepreneur, ticker):
-    # Process the data
+# Analyse the correlation between the chosen entrepreneur and crypto
+def analyse(Source, Ticker):
+    
+    ##Perform user input checks
+    # Check if user has selected any input
+    if Source == 'Select Source' and Ticker == 'Select Ticker':
+        return "Make sure to select both a source and ticker!"
+    
+    # Check if user has selected source
+    if Source == 'Select Source':
+        return "Make sure to select a source too!"
+    
+    # Check if user has selected ticker
+    if Ticker == 'Select Ticker':
+        return "Make sure to select a crypto ticker too!"
+    
+    
+    ## Process the data and return plots
+    # xxx
     tweeting_price_curve_doge, tweeting_price_curve_btc = make_tweeting_price_curve()
+    
+    # xxx
     cumulative_return_curve_doge,cumulative_return_curve_btc = make_cumulative_curve()
+    
+    # xxx
     price_curve_btc, price_curve_doge = make_price_curve()
-    rf_plot1, rf_plot2, rf_plot3, rf_plot4, rf_plot5, rf_plot6, rf_plot7 = function_random_forest()
+    
+    # xxx
+    rf_ema_closing_prices, rf_ema_daily_return_volatility, rf_plot3, rf_plot4, rf_plot5, rf_plot6, rf_plot7 = make_random_forest()
 
-    # Create a dashboard to visualise the data
+    
+    ## Create a dashboard to visualise the plots
     dashboard = build_dashboard(
                                 tweeting_price_curve_doge, 
                                 tweeting_price_curve_btc, 
@@ -22,8 +45,8 @@ def analyse(entrepreneur, ticker):
                                 cumulative_return_curve_btc, 
                                 price_curve_btc, 
                                 price_curve_doge, 
-                                rf_plot1,
-                                rf_plot2,
+                                rf_ema_closing_prices,
+                                rf_ema_daily_return_volatility,
                                 rf_plot3,
                                 rf_plot4,
                                 rf_plot5,
@@ -32,21 +55,22 @@ def analyse(entrepreneur, ticker):
                                 # Add more plots here, remember to match the build_dashboard file too
                                 )
 
-    # Return the dashboard
+    ## Return the dashboard
     return dashboard
+
 
 # Make interactive drop-down lists which users can choose an entrepreneur and stock/crypto from
 user_input = interact_manual(
                                 analyse, 
-                                entrepreneur=['Elon Musk'], 
-                                ticker=['Bitcoin', 'Dogecoin']
+                                Source=['Select Source', 'Elon Musk Tweets', 'Google Search Data'], 
+                                Ticker=['Select Ticker', 'Bitcoin', 'Dogecoin']
                             )
 
 # Make the interface for the app
 interface = pn.Column(
                         '# SillyCon App',
-                        '## Analyse correlations between Silicon Valley Entrepreneurs Tweets and Crypto Prices',
-                        '### Select your Entrepreneur and Crypto pair, then press Run Interact', 
+                        '## Analyse correlations between Social Sources and Crypto Prices',
+                        '### Select a Source and Crypto Ticker, then press Run Interact', 
                         user_input
                     )
 
