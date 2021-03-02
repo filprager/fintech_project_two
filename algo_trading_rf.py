@@ -5,10 +5,7 @@ import numpy as np
 # Set the random seed for reproducibility
 from numpy.random import seed
 seed(1)
-from tensorflow import random
-random.set_seed(1)
 
-# -------------------- Dogecoin Section --------------------
 
 # Load Dogecoin data
 df_doge = pd.read_pickle('data/elon_doge.plk')
@@ -47,7 +44,7 @@ def window_data(df, window, feature_col_number, target_col_number):
         target = df.iloc[(i + window), target_col_number]
         X.append(features)
         y.append(target)
-    return np.array(X), np.array(y).reshape(-1, 1)
+    return np.array(X), np.array(y)
 
 # Define the window size
 window_size = 100
@@ -78,72 +75,29 @@ X_test = X
 y_train = y
 y_test = y
 
-X_train
+# Import SKLearn Library and Classes
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import make_classification
 
-# Reshape the features data
-X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
-X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
+# Fit a SKLearn linear regression using just the training set (X_train, Y_train):
+model = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=1)
+model.fit(X_train, y_train)
 
-# Importing required Keras modules
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
-
-
-# Define the LSTM RNN model.
-model = Sequential()
-
-# Initial model setup
-number_units = 100
-dropout_fraction = 0.2
-
-# Layer 1
-model.add(LSTM(
-    units=number_units,
-    return_sequences=True,
-    input_shape=(X_train.shape[1], 1))
-    )
-model.add(Dropout(dropout_fraction))
-
-# Layer 2
-model.add(LSTM(units=number_units, return_sequences=True))
-model.add(Dropout(dropout_fraction))
-
-# Layer 3
-model.add(LSTM(units=number_units))
-model.add(Dropout(dropout_fraction))
-
-# Output layer
-model.add(Dense(1, activation='sigmoid'))
-# sigmoid
-# relu
-
-
-# Compile the model
-model.compile(optimizer="adam", loss="mean_squared_error")
-
-# Show the model summary
-model.summary()
-
-# Train the model
-model.fit(X_train, y_train, epochs=10, shuffle=False, batch_size=100, verbose=1)
-
-# Save ML model
-model.save('model/rnn_lstm_model_doge')
+# Save the pre-trained model
+from joblib import dump, load
+dump(model, 'model/rf_model_doge.joblib')
 
 # Save X_test
-np.save('data/rnn_X_test_doge.npy', X_test)
+np.save('data/rf__X_test_doge.npy', X_test)
 
 # Save y_test
-np.save('data/rnn_y_test_doge.npy', y_test)
+np.save('data/rf_y_test_doge.npy', y_test)
 
 # Save Dogecoin signal
-signals_df_doge.to_pickle('data/rnn_signals_doge.plk')
+signals_df_doge.to_pickle('data/rf_signals_doge.plk')
 
-# Evaluate the model
-model.evaluate(X_test, y_test, verbose=0)
-
-# Make predictions using the testing data X_test
-predicted = model.predict_classes(X_test)
+# Make a prediction of "y" values from the x test dataset
+predicted = model.predict(X_test)
 
 # Create a DataFrame of Real and Predicted values
 result = pd.DataFrame({
@@ -166,7 +120,7 @@ result = result.join(signals_df_doge['Daily Return'])
 result
 
 # Save the result
-result.to_pickle('data/rnn_result_doge.plk')
+result.to_pickle('data/rf_result_doge.plk')
 
 # Calculate cumulative return of model and plot the result
 cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
@@ -176,8 +130,6 @@ cumulative_return_end_doge
 
 cumulative_return_plot_doge = cumulative_return.hvplot(title='Dogecoin Cumulative Returns')
 cumulative_return_plot_doge
-
-# -------------------- Bitcoin Section --------------------
 
 # Load Bitcoin data
 df_btc = pd.read_pickle('data/elon_btc.plk')
@@ -232,69 +184,29 @@ X_test = X
 y_train = y
 y_test = y
 
-# Reshape the features data
-X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
-X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
+# Import SKLearn Library and Classes
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import make_classification
 
-# Importing required Keras modules
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
+# Fit a SKLearn linear regression using just the training set (X_train, Y_train):
+model = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=2)
+model.fit(X_train, y_train)
 
-# Define the LSTM RNN model.
-model = Sequential()
-
-# Initial model setup
-number_units = 100
-dropout_fraction = 0.2
-
-# Layer 1
-model.add(LSTM(
-    units=number_units,
-    return_sequences=True,
-    input_shape=(X_train.shape[1], 1))
-    )
-model.add(Dropout(dropout_fraction))
-
-# Layer 2
-model.add(LSTM(units=number_units, return_sequences=True))
-model.add(Dropout(dropout_fraction))
-
-# Layer 3
-model.add(LSTM(units=number_units))
-model.add(Dropout(dropout_fraction))
-
-# Output layer
-model.add(Dense(1, activation='sigmoid'))
-# sigmoid
-# relu
-
-
-# Compile the model
-model.compile(optimizer="adam", loss="mean_squared_error")
-
-# Show the model summary
-model.summary()
-
-# Train the model
-model.fit(X_train, y_train, epochs=10, shuffle=False, batch_size=100, verbose=1)
-
-# Save ML model
-model.save('model/rnn_lstm_model_btc')
+# Save the pre-trained model
+from joblib import dump, load
+dump(model, 'model/rf_model_btc.joblib')
 
 # Save X_test
-np.save('data/rnn_X_test_btc.npy', X_test)
+np.save('data/rf__X_test_btc.npy', X_test)
 
 # Save y_test
-np.save('data/rnn_y_test_btc.npy', y_test)
+np.save('data/rf_y_test_btc.npy', y_test)
 
-# Save Bitcoin signal
-signals_df_doge.to_pickle('data/rnn_signals_btc.plk')
+# Save signal
+signals_df_doge.to_pickle('data/rf_signals_btc.plk')
 
-# Evaluate the model
-model.evaluate(X_test, y_test, verbose=0)
-
-# Make predictions using the testing data X_test
-predicted = model.predict_classes(X_test)
+# Make a prediction of "y" values from the x test dataset
+predicted = model.predict(X_test)
 
 # Create a DataFrame of Real and Predicted values
 result = pd.DataFrame({
@@ -304,8 +216,6 @@ result = pd.DataFrame({
 
 # Show the DataFrame's head
 result
-
-import hvplot.pandas
 
 result['Predicted Positive Return'].hvplot()
 
@@ -318,7 +228,7 @@ result = result.join(signals_df_btc['Daily Return'])
 result
 
 # Save the result
-result.to_pickle('data/rnn_result_btc.plk')
+result.to_pickle('data/rf_result_btc.plk')
 
 # Calculate cumulative return of model and plot the result
 cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
@@ -328,3 +238,5 @@ cumulative_return_end_btc
 
 cumulative_return_plot_btc = cumulative_return.hvplot(title='Bitcoin Cumulative Returns')
 cumulative_return_plot_btc
+
+

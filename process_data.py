@@ -654,7 +654,7 @@ def algo_trading_fixed_strategy():
 
   
 
-# Create the Neural Network function
+# Load Neural Network algo trading result, return some plots
 def load_algo_trading_result_rnn():
     import pandas as pd
     import hvplot.pandas
@@ -666,15 +666,15 @@ def load_algo_trading_result_rnn():
     result
 
     # Meke predicted positive return curve
-    predicted_positive_return_curve_doge = result['Predicted Positive Return'].hvplot(title='Dogecoin Predicted Positive Return')
-    predicted_positive_return_curve_doge
+    rnn_predicted_positive_return_curve_doge = result['Predicted Positive Return'].hvplot(title='Dogecoin Predicted Positive Return')
+    rnn_predicted_positive_return_curve_doge
 
     # Calculate cumulative return of model and plot the result
     cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
     cumulative_return
 
-    cumulative_return_plot_doge = cumulative_return.hvplot(title='Dogecoin Cumulative Returns')
-    cumulative_return_plot_doge
+    rnn_cumulative_return_plot_doge = cumulative_return.hvplot(title='Dogecoin Cumulative Returns')
+    rnn_cumulative_return_plot_doge
 
     # ----------------- Bitcoin Section -----------------
 
@@ -683,21 +683,68 @@ def load_algo_trading_result_rnn():
     result
 
     # Meke predicted positive return curve
-    predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(title='Bitcoin Predicted Positive Return')
-    predicted_positive_return_curve_btc
+    rnn_predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(title='Bitcoin Predicted Positive Return')
+    rnn_predicted_positive_return_curve_btc
 
     # Calculate cumulative return of model and plot the result
     cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
     cumulative_return
 
-    cumulative_return_plot_btc = cumulative_return.hvplot(title='Bitcoin Cumulative Returns')
-    cumulative_return_plot_btc
+    rnn_cumulative_return_plot_btc = cumulative_return.hvplot(title='Bitcoin Cumulative Returns')
+    rnn_cumulative_return_plot_btc
 
     # Retrn plots
     return (
-        predicted_positive_return_curve_doge, 
-        cumulative_return_plot_doge, 
-        predicted_positive_return_curve_btc, 
-        cumulative_return_plot_btc
+        rnn_predicted_positive_return_curve_doge, 
+        rnn_cumulative_return_plot_doge, 
+        rnn_predicted_positive_return_curve_btc, 
+        rnn_cumulative_return_plot_btc
     )
 
+
+# Load Random Forest algo trading result, return some plots
+def load_algo_trading_result_rf():
+    import pandas as pd
+    import hvplot.pandas
+
+    # ----------------- Dogecoin Section -----------------
+
+    # Load rnn algo trading result
+    result = pd.read_pickle('data/rf_result_doge.plk')
+    result
+
+    # Meke predicted positive return curve
+    rf_predicted_positive_return_curve_doge = result['Predicted Positive Return'].hvplot(title='Dogecoin Predicted Positive Return')
+    rf_predicted_positive_return_curve_doge
+
+    # Calculate cumulative return of model and plot the result
+    cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
+    cumulative_return
+
+    rf_cumulative_return_plot_doge = cumulative_return.hvplot(title='Dogecoin Cumulative Returns')
+    rf_cumulative_return_plot_doge
+
+    # ----------------- Bitcoin Section -----------------
+
+    # Load rnn algo trading result
+    result = pd.read_pickle('data/rf_result_btc.plk')
+    result
+
+    # Meke predicted positive return curve
+    rf_predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(title='Bitcoin Predicted Positive Return')
+    rf_predicted_positive_return_curve_btc
+
+    # Calculate cumulative return of model and plot the result
+    cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
+    cumulative_return
+
+    rf_cumulative_return_plot_btc = cumulative_return.hvplot(title='Bitcoin Cumulative Returns')
+    rf_cumulative_return_plot_btc
+
+    # Retrn plots
+    return (
+        rf_predicted_positive_return_curve_doge, 
+        rf_cumulative_return_plot_doge, 
+        rf_predicted_positive_return_curve_btc, 
+        rf_cumulative_return_plot_btc
+    )
