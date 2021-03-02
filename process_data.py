@@ -655,15 +655,49 @@ def algo_trading_fixed_strategy():
   
 
 # Create the Neural Network function
-def function_neural_network():
-    plot1 = None
-    plot2 = None
-    plot3 = None
-    table1 = None 
-    table2 = None 
-    table3 = None
+def load_algo_trading_result_rnn():
+    import pandas as pd
+    import hvplot.pandas
 
-    ##### MARIANNAS STUFF HERE ######
-    
-    return plot1, plot2, plot3, table1, table2, table3
+    # ----------------- Dogecoin Section -----------------
+
+    # Load rnn algo trading result
+    result = pd.read_pickle('data/rnn_result_doge.plk')
+    result
+
+    # Meke predicted positive return curve
+    predicted_positive_return_curve_doge = result['Predicted Positive Return'].hvplot(title='Dogecoin Predicted Positive Return')
+    predicted_positive_return_curve_doge
+
+    # Calculate cumulative return of model and plot the result
+    cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
+    cumulative_return
+
+    cumulative_return_plot_doge = cumulative_return.hvplot(title='Dogecoin Cumulative Returns')
+    cumulative_return_plot_doge
+
+    # ----------------- Bitcoin Section -----------------
+
+    # Load rnn algo trading result
+    result = pd.read_pickle('data/rnn_result_btc.plk')
+    result
+
+    # Meke predicted positive return curve
+    predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(title='Bitcoin Predicted Positive Return')
+    predicted_positive_return_curve_btc
+
+    # Calculate cumulative return of model and plot the result
+    cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
+    cumulative_return
+
+    cumulative_return_plot_btc = cumulative_return.hvplot(title='Bitcoin Cumulative Returns')
+    cumulative_return_plot_btc
+
+    # Retrn plots
+    return (
+        predicted_positive_return_curve_doge, 
+        cumulative_return_plot_doge, 
+        predicted_positive_return_curve_btc, 
+        cumulative_return_plot_btc
+    )
 
