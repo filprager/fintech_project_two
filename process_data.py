@@ -110,7 +110,7 @@ def make_cumulative_curve():
     cumulative_returns = (1 + daily_returns).cumprod()-1
     cumulative_returns.head()
     
-    # Plot the daily returns of the S&P 500 over the last 5 years
+    # Plot the daily returns of dogecoin over the last 5 years
     cumulative_doge_curve =cumulative_returns.hvplot(
         figsize=(10,5),
         title='Cumulative Returns for Dogeoin',
@@ -143,7 +143,7 @@ def make_cumulative_curve():
     cumulative_returns.head()
 
 
-    # Plot the daily returns of the S&P 500 over the last 2 years
+    # Plot the daily returns of the bitcoin over the last 2 years
     cumulative_bitcoin_curve =cumulative_returns.hvplot(
         figsize=(10,5),
         title='Cumulative Returns for Bitcoin',
