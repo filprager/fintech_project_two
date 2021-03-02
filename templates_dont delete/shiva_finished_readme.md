@@ -5,7 +5,7 @@
 SillyCon
 
 ## Introduction
-at the inception of fintech project two, the bitcoin and dogecoin prices skyrocketed after Elon Musk's Tweeted about them.Conincidentally,the price of Gamestop was causing trouble in Wallstreet, after reddit users manipulated the stock price of Gamestop.As such, we thought that there is a correlation between the tweets of Elon Musk and the price movement of bitcoin and dogecoin.This is how the idea for the project came about.
+At the inception of fintech project two,the bitcoin and dogecoin prices skyrocketed after Elon Musk's Tweeted about them.Conincidentally,the price of Gamestop was causing trouble in Wallstreet,after reddit users manipulated the stock price of Gamestop.As such,we thought that there is a correlation between the tweets of Elon Musk and the price movement of bitcoin and dogecoin.This is how the idea for the project came about.
 
 
 ## Hypothesis
@@ -13,25 +13,21 @@ Silicon Valley tech entrepreneurs tweets (e.g. from Elon Musk, Jack Dorsey etc) 
 
 
 ## Goal
-A web app (or Chatbot - stretch goal) where a user can choose to analyse the historical stock/crypto price correlation to what a selected tech entrepreneur has said recently, and get an auto trading strategy based on it.
+A web app (or Chatbot)  where a user can choose to analyse the historical stock/crypto price correlation to what a selected tech entrepreneur has said recently, and get an auto trading strategy based on it.
 
-# Import libraries and dependencies
-from panel.interact import interact_manual
-import panel as pn
-import hvplot.pandas
-import numpy as np
-import pandas as pd
-from pathlib import Path
-import hvplot.pandas
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import make_classification
-
-# Import self-made functions
-from build_dashboard import build_dashboard
-from process_data import make_tweeting_price_curve, make_cumulative_curve, make_price_curve, function_random_forest
+## Import libraries and dependencies
+'from panel.interact import interact_manual'
+'import panel as pn'
+'import hvplot.pandas'
+'import numpy as np'
+'import pandas as pd'
+'from pathlib import Path'
+'import hvplot.pandas'
+'from sklearn.ensemble import RandomForestClassifier'
+'from sklearn.datasets import make_classification'
 
 
-#### WORKFLOW 
+## WORKFLOW 
 
 - Fetch data ( Tweets from Twitter API ,Stock/crypto prices and volumes from Yahoo Finance API (minimum hourly data),and Specific time period (start/end date) of the stock/crypto and twitter data or have preset period )  + Clean data  
 - Process data (including machine learning) and layout for the code(main.py, dashboard)-
@@ -46,14 +42,12 @@ from process_data import make_tweeting_price_curve, make_cumulative_curve, make_
 - Migrate to AWS - TBC
 
 
-### How to run the app/  Start Up
+### How to run the app
 
 `python3 main.py`
 
 ## APP Output
-
-- Keyword, synonyms and associated sentiment of what the selected entrepreneur has said recently in tweets 
-    - Present as Wordcloud
+- Present as Wordcloud
 - Historical price curve of the chosen stock/crypto
 - Correlation curve between stock/crypto price and tweet sentiment, over time
 - Comparison of different models (e.g. Random Forest vs. Neural Network)
