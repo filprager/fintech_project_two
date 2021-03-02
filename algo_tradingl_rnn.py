@@ -8,8 +8,6 @@ seed(1)
 from tensorflow import random
 random.set_seed(1)
 
-# -------------- Dogecoin Sectioc --------------
-
 # Load Dogecoin data
 df_doge = pd.read_pickle('data/elon_doge.plk')
 df_doge
@@ -52,41 +50,40 @@ signals_df_doge
 #         y.append(target)
 #     return np.array(X), np.array(y).reshape(-1, 1)
 
-def window_data(df, window, feature_col_number, target_col_number, extra_col_number):
+def window_data(df, window, feature_col_number, target_col_number):
     '''
-    This function accepts 2 column numbers for the features (X) and one for target (y).
+    This function accepts 1 column number for the features (X) and one for target (y).
     It chunks the data up with a rolling window of Xt - window to predict Xt+1.
     It returns two numpy arrays of X and y.
     '''
     X = []
     y = []
     for i in range(len(df) - window):
-        features = df.iloc[i : (i + window), [feature_col_number, extra_col_number]]
-
+        features = df.iloc[i : (i + window), feature_col_number]
         target = df.iloc[(i + window), target_col_number]
         X.append(features)
         y.append(target)
     return np.array(X), np.array(y).reshape(-1, 1)
 
 # Define the window size
-window_size = 10
+window_size = 100
 
 # Set the index of the feature, target and extra columns
-feature_column = 0 # Historical Dogecoin Price
+feature_column = 1 # Historical Dogecoin Price
 target_column = 3 # Positive Return
-extra_column = 1 # Whether Elon Musk's Tweet Mention Dogecoin
+# extra_column = 1 # Whether Elon Musk's Tweet Mention Dogecoin
 
 # Create the features (X) and target (y) data using the window_data() function.
-X, y = window_data(signals_df_doge, window_size, feature_column, target_column, extra_column)
+X, y = window_data(signals_df_doge, window_size, feature_column, target_column)
 
 # Print a few sample values from X and y
 print (f"X sample values:\n{X[:3]} \n")
 print (f"y sample values:\n{y[:3]}")
 
-# Convert 3D arrays to 2D arrays 
-nsamples, nx, ny = X.shape
-X = X.reshape((nsamples,nx*ny))
-X
+# # Convert 3D arrays to 2D arrays 
+# nsamples, nx, ny = X.shape
+# X = X.reshape((nsamples,nx*ny))
+# X
 
 # Manually splitting the data
 split = int(0.7 * len(X))
@@ -143,7 +140,7 @@ from tensorflow.keras.layers import LSTM, Dense, Dropout
 model = Sequential()
 
 # Initial model setup
-number_units = 20
+number_units = 100
 dropout_fraction = 0.2
 
 # Layer 1
@@ -175,7 +172,7 @@ model.compile(optimizer="adam", loss="mean_squared_error")
 model.summary()
 
 # Train the model
-model.fit(X_train, y_train, epochs=100, shuffle=False, batch_size=100, verbose=1)
+model.fit(X_train, y_train, epochs=10, shuffle=False, batch_size=100, verbose=1)
 
 # Save ML model
 model.save('model/rnn_lstm_model_doge')
@@ -231,8 +228,6 @@ cumulative_return_end_doge
 cumulative_return_plot_doge = cumulative_return.hvplot(title='Dogecoin Cumulative Returns')
 cumulative_return_plot_doge
 
-# -------------- Bitcoin Sectioc --------------
-
 # Load Bitcoin data
 df_btc = pd.read_pickle('data/elon_btc.plk')
 df_btc
@@ -258,24 +253,24 @@ signals_df_btc['Positive Return'] = np.where(signals_df_btc['Daily Return'] > 0,
 signals_df_btc
 
 # Define the window size
-window_size = 10
+window_size = 100
 
 # Set the index of the feature, target and extra columns
-feature_column = 0 # Historical Dogecoin Price
+feature_column = 1 # Historical Dogecoin Price
 target_column = 3 # Positive Return
-extra_column = 1 # Whether Elon Musk's Tweet Mention Dogecoin
+#extra_column = 1 # Whether Elon Musk's Tweet Mention Dogecoin
 
 # Create the features (X) and target (y) data using the window_data() function.
-X, y = window_data(signals_df_btc, window_size, feature_column, target_column, extra_column)
+X, y = window_data(signals_df_btc, window_size, feature_column, target_column)
 
 # Print a few sample values from X and y
 print (f"X sample values:\n{X[:3]} \n")
 print (f"y sample values:\n{y[:3]}")
 
-# Convert 3D arrays to 2D arrays 
-nsamples, nx, ny = X.shape
-X = X.reshape((nsamples,nx*ny))
-X
+# # Convert 3D arrays to 2D arrays 
+# nsamples, nx, ny = X.shape
+# X = X.reshape((nsamples,nx*ny))
+# X
 
 # Manually splitting the data
 split = int(0.7 * len(X))
@@ -331,7 +326,7 @@ from tensorflow.keras.layers import LSTM, Dense, Dropout
 model = Sequential()
 
 # Initial model setup
-number_units = 20
+number_units = 100
 dropout_fraction = 0.2
 
 # Layer 1
@@ -363,7 +358,7 @@ model.compile(optimizer="adam", loss="mean_squared_error")
 model.summary()
 
 # Train the model
-model.fit(X_train, y_train, epochs=100, shuffle=False, batch_size=100, verbose=1)
+model.fit(X_train, y_train, epochs=10, shuffle=False, batch_size=100, verbose=1)
 
 # Save ML model
 model.save('model/rnn_lstm_model_btc')
