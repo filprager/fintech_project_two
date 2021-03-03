@@ -5,8 +5,13 @@ import numpy as np
 
 def make_tweeting_price_curve():
     '''
-    Make a curve that shows tweeting times vs crypto price
-    Return: HvPlot objects
+    Make plots that shows Elon Musk's crypto related tweeting times vs the crypto's historical prices
+
+    Returns: A tuple of Hvplot objects.
+
+    Items in the tutple:
+    1. A line plot showing Bitcoin's historical price with some markers on the top indicating when Elon Musk tweets something about Bitcoin
+    1. A line plot showing Dogecoin's historical price with some markers on the top indicating when Elon Musk tweets something about Dogecoin
     '''
 
     # Load data for Dogecoin
@@ -66,15 +71,21 @@ def make_tweeting_price_curve():
     tweeting_price_curve_btc.opts(width=1000, title='When Elon Musk tweets about Bitcoin', ylabel='Bitcoin price in $')
 
     # Return tweeting vs price curves
-    return tweeting_price_curve_doge, tweeting_price_curve_btc
+    return tweeting_price_curve_btc, tweeting_price_curve_doge
 
 
-    #-----------------------------------------------------------------------------------------------------------------------------------------------
+    # _________________________________________________________________________________________________________________________________________________________ 
+
 
 def make_cumulative_curve():                   
     '''
-    Make a curve that shows cumulative return
-    Return: HvPlot objects
+    Make plots that shows crypto's cumulative returns
+
+    Returns: A tuple of Hvplot objects.
+
+    Items in the tutple:
+    1. A line plot showing Bitcoin's cumulative returns 
+    2. A line plot showing Dogecoin's cumulative returns 
     '''
     
     df1 = pd.read_pickle("data/elon_doge.plk")
@@ -122,15 +133,21 @@ def make_cumulative_curve():
 
 
        
-    return cumulative_doge_curve, cumulative_bitcoin_curve
+    return cumulative_bitcoin_curve, cumulative_doge_curve
 
 
-    #-----------------------------------------------------------------------------------------------------------------------------------------------
+    # _________________________________________________________________________________________________________________________________________________________
+
 
 def make_price_curve():
     '''
-    Make a curve that shows historical price
-    Return: Price curve HVplots
+    Make plots that shows crypto's historical price
+
+    Returns: A tuple of Hvplot objects.
+
+    Items in the tutple:
+    1. A line plot showing Bitcoin's historical price
+    2. A line plot showing Dogecoin's historical price 
     '''
     
     # Bitcoin data
@@ -152,12 +169,17 @@ def make_price_curve():
     return bitcoin_price_curve, dogecoin_price_curve
 
 
-    #-----------------------------------------------------------------------------------------------------------------------------------------------
+    # _________________________________________________________________________________________________________________________________________________________
+
 
 def make_random_forest(): 
     '''
-    Creates and runs the Random Forest function using historical pricing only
-    Returns various HvPlot objects
+    Make plots that shows results of an algorithmic trading based on Random Forest
+
+    Returns: A tuple of Hvplot objects.
+
+    Items in the tutple:
+    @TODO: Need more polish as tweets are not taken into account for now
     '''
     
     # Import libraries and dependencies
@@ -343,14 +365,25 @@ def make_random_forest():
     
     return rf_ema_closing_prices, rf_ema_daily_return_volatility, rf_plot3, rf_plot4, rf_plot5, rf_plot6, rf_plot7
 
+    
+    # _________________________________________________________________________________________________________________________________________________________
 
-    #-----------------------------------------------------------------------------------------------------------------------------------------------
 
 def algo_trading_fixed_strategy():
     '''
-    Create the algo trading program based on a fixed startegy i.e. buy when Elon tweets and sell after 24 hours
+    Make plots that show the results of an algorithmic trading based on a fixed staretegy, i.e. buy whenever Elon Musk tweets something about a crypto, and sell after 24 hours.
+
+    Returns: A tuple of Hvplot objects.
+
+    Items in the tutple:
+    1. A line plot showing Bitcoin's historical price with some markers on the top indicating buy/sell actions
+    2. A line plot showing portfolio value of the Bitcoin investment with some markers on the top indicating buy/sell actions
+    3. A table showing the evaluation results of the performance of the Bitcoin investment portfolio
+    4. A line plot showing Dogecoin's historical price with some markers on the top indicating buy/sell actions
+    5. A line plot showing portfolio value of the Dogecoin investment with some markers on the top indicating buy/sell actions
+    6. A table showing the evaluation results of the performance of the Dogecoin investment portfolio
     '''
-    
+
     # Load Dogecoin data
     df_doge = pd.read_pickle('./data/elon_doge.plk')
     df_doge
@@ -655,21 +688,29 @@ def algo_trading_fixed_strategy():
 
     # Return plots
     return (
-        entry_exit_price_plot_doge,
-        entry_exit_portfolio_plot_doge,
-        portfolio_evaluation_table_doge,
         entry_exit_price_plot_btc,
         entry_exit_portfolio_plot_btc,
-        portfolio_evaluation_table_btc
+        portfolio_evaluation_table_btc,
+        entry_exit_price_plot_doge,
+        entry_exit_portfolio_plot_doge,
+        portfolio_evaluation_table_doge
     )
+    
 
-  
-    #-----------------------------------------------------------------------------------------------------------------------------------------------
+    # _________________________________________________________________________________________________________________________________________________________
+
 
 def load_algo_trading_result_rnn():
     '''
-    Load Neural Network algo trading result
-    Return some plots
+    Make plots that show the results of an algorithmic trading based on RNN LSTM
+
+    Returns: A tuple of Hvplot objects.
+
+    Items in the tutple:
+    1. A line plot showing the algo's predictions on whether Bitcoin price will rise or fall in each hour
+    2. A line plot showing the algo trading's cumulative returns on Bitcoin 
+    3. A line plot showing the algo's predictions on whether Dogecoin price will rise or fall in each hour
+    4. A line plot showing the algo trading's cumulative returns on Dogecoin 
     '''
 
     # ----------------- Dogecoin Section -----------------
@@ -707,19 +748,27 @@ def load_algo_trading_result_rnn():
 
     # Retrn plots
     return (
-        rnn_predicted_positive_return_curve_doge, 
-        rnn_cumulative_return_plot_doge, 
         rnn_predicted_positive_return_curve_btc, 
-        rnn_cumulative_return_plot_btc
+        rnn_cumulative_return_plot_btc,
+        rnn_predicted_positive_return_curve_doge, 
+        rnn_cumulative_return_plot_doge
     )
 
 
-    #-----------------------------------------------------------------------------------------------------------------------------------------------
+    # _________________________________________________________________________________________________________________________________________________________
+
 
 def load_algo_trading_result_rf():
     '''
-    Load Random Forest algo trading result
-    Return some plots
+    Make plots that show the results of an algorithmic trading based on Random Forest
+
+    Returns: A tuple of Hvplot objects.
+
+    Items in the tutple:
+    1. A line plot showing the algo's predictions on whether Bitcoin price will rise or fall in each hour
+    2. A line plot showing the algo trading's cumulative returns on Bitcoin 
+    3. A line plot showing the algo's predictions on whether Dogecoin price will rise or fall in each hour
+    4. A line plot showing the algo trading's cumulative returns on Dogecoin 
     '''
 
     # ----------------- Dogecoin Section -----------------
@@ -757,8 +806,8 @@ def load_algo_trading_result_rf():
 
     # Retrn plots
     return (
-        rf_predicted_positive_return_curve_doge, 
-        rf_cumulative_return_plot_doge, 
         rf_predicted_positive_return_curve_btc, 
-        rf_cumulative_return_plot_btc
+        rf_cumulative_return_plot_btc,
+        rf_predicted_positive_return_curve_doge, 
+        rf_cumulative_return_plot_doge
     )
