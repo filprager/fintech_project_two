@@ -19,16 +19,16 @@ signals_df_doge
 signals_df_doge['Daily Return'] = signals_df_doge['Dogecoin Price'].pct_change()
 signals_df_doge
 
+# Construct the dependent variable where if daily return is greater than 0, then 1, else, 0.
+signals_df_doge['Positive Return'] = np.where(signals_df_doge['Daily Return'] > 0, 1.0, 0.0)
+signals_df_doge
+
 # Shift DataFrame values by 1
-signals_df_doge = signals_df_doge.shift(1)
+signals_df_doge["Does Elon Musk's Tweet Tention the Word DOGE?"] = signals_df_doge["Does Elon Musk's Tweet Tention the Word DOGE?"].shift(1)
 signals_df_doge
 
 # Drop NAs
 signals_df_doge = signals_df_doge.dropna()
-signals_df_doge
-
-# Construct the dependent variable where if daily return is greater than 0, then 1, else, 0.
-signals_df_doge['Positive Return'] = np.where(signals_df_doge['Daily Return'] > 0, 1.0, 0.0)
 signals_df_doge
 
 def window_data(df, window, feature_col_number, target_col_number):
@@ -61,23 +61,25 @@ print (f"X sample values:\n{X[:3]} \n")
 print (f"y sample values:\n{y[:3]}")
 
 # Manually splitting the data
-split = int(0.7 * len(X))
+split = int(0.9 * len(X))
 
-# X_train = X[: split]
+X_train = X[: split]
 # X_test = X[split:]
 
-# y_train = y[: split]
+y_train = y[: split]
 # y_test = y[split:]
 
-X_train = X
+# X_train = X
 X_test = X
 
-y_train = y
+# y_train = y
 y_test = y
 
 # Import SKLearn Library and Classes
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import make_classification
+
+X_train.shape
 
 # Fit a SKLearn linear regression using just the training set (X_train, Y_train):
 model = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=1)
@@ -111,8 +113,8 @@ result
 import hvplot.pandas
 result['Predicted Positive Return'].hvplot()
 
-# Replace predicted values 0 to -1 to account for shorting
-result['Predicted Positive Return'].replace(0, -1, inplace=True)
+# Replace predicted values 0 by -1 for shorting
+result['Predicted Positive Return'].replace({0:-1}, inplace=True)
 result
 
 # Add a new column for daily return 
@@ -143,9 +145,9 @@ signals_df_btc
 signals_df_btc['Daily Return'] = signals_df_btc['Bitcoin Price'].pct_change()
 signals_df_btc
 
-# Shift DataFrame values by 1
-signals_df_btc = signals_df_btc.shift(1)
-signals_df_btc
+# # Shift DataFrame values by 1
+# signals_df_btc["Does Elon Musk's Tweet Tention the Word Bitcoin or BTC?"] = signals_df_btc["Does Elon Musk's Tweet Tention the Word Bitcoin or BTC?"].shift(1)
+# signals_df_btc
 
 # Drop NAs
 signals_df_btc = signals_df_btc.dropna()
@@ -170,18 +172,18 @@ print (f"X sample values:\n{X[:3]} \n")
 print (f"y sample values:\n{y[:3]}")
 
 # Manually splitting the data
-split = int(0.7 * len(X))
+split = int(0.9 * len(X))
 
-# X_train = X[: split]
+X_train = X[: split]
 # X_test = X[split:]
 
-# y_train = y[: split]
+y_train = y[: split]
 # y_test = y[split:]
 
-X_train = X
+# X_train = X
 X_test = X
 
-y_train = y
+# y_train = y
 y_test = y
 
 # Import SKLearn Library and Classes
