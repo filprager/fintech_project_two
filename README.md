@@ -1,10 +1,14 @@
 #FINTECH PROJECT TWO
 ![Image](https://raw.githubusercontent.com/filprager/fintech_project_two/layout/image/Etm4yFZUcAAoN5u.jpeg)
 
-## Main APP 
-SillyCon
 
-## Introductio
+# SillyCon
+
+## How to run the app
+
+`python3 main.py`
+
+## Introduction
 At the inception of fintech project two,the bitcoin and dogecoin prices skyrocketed after Elon Musk's Tweeted about them.Conincidentally,the price of Gamestop was causing trouble in Wallstreet,after reddit users manipulated the stock price of Gamestop. As such,we thought that there is a correlation between the tweets of Elon Musk and the price movement of bitcoin and dogecoin.This is how the idea for the project came about.
 
 
@@ -30,7 +34,6 @@ A web app (or Chatbot)  where a user can choose to analyse the historical stock/
 `numpy`
 
 
-
 ## Workflow
 
 - Fetch data ( Tweets from Twitter API ,Stock/crypto prices and volumes from Yahoo Finance API (minimum hourly data),and Specific time period (start/end date) of the stock/crypto and twitter data or have preset period )  + Clean data  
@@ -46,10 +49,6 @@ A web app (or Chatbot)  where a user can choose to analyse the historical stock/
 - Migrate to AWS - TBC
 
 
-## How to run the app
-
-`python3 main.py`
-
 ## APP Output
 - Present as Wordcloud
 - Historical price curve of the chosen stock/crypto
@@ -60,12 +59,4 @@ A web app (or Chatbot)  where a user can choose to analyse the historical stock/
     - A table showing pottfolio metrics
 
 
-## Future Improvements
 
-1. Increase the data fields interms of entrepreneurs and tweets numbers.
-2. not just limited to Twitter rather we can include all possible sources of statements such as publication,journals etc.
-3. Create and compare multiple ML models for better trading signals.
-4. can use asynco function for faster data processing
-5. This app is limited just for predictions but not for advisory purposes, could have gone to that extend. 
-6. we can link it to the online trading plateform if a user wants to do so.
-7. Interface it with AWS lex and lambda, which will need fair bit of time to accomplish.
