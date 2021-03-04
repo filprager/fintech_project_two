@@ -3,7 +3,11 @@ from panel.interact import interact_manual
 import panel as pn
 
 # Import self-made functions
-from build_dashboard import build_dashboard
+from build_dashboard import (
+                                build_dashboard_btc,
+                                build_dashboard_doge
+                            )
+
 from process_data import (
                             make_tweeting_price_curve, 
                             make_cumulative_curve, 
@@ -14,7 +18,7 @@ from process_data import (
                             load_algo_trading_result_rf
                         )
 
-# Analyse the correlation between the chosen entrepreneur and crypto
+# Analyse the correlation between the chosen social source and crypto
 def analyse(Source, Ticker):
     
     ##Perform user input checks
@@ -31,20 +35,36 @@ def analyse(Source, Ticker):
         return "Make sure to select a crypto ticker too!"
     
     
-    ## Process the data and return plots
-    # xxx
-    tweeting_price_curve_btc, tweeting_price_curve_doge = make_tweeting_price_curve()
+    ## Process the data and return plots from the various functions
+    # Plots for Price Curve with Tweets marked
+    (
+        tweeting_price_curve_btc, 
+        tweeting_price_curve_doge
+    ) = make_tweeting_price_curve()
     
-    # xxx
-    cumulative_return_curve_btc, cumulative_return_curve_doge = make_cumulative_curve()
+    # Plots for Cumulative Curve
+    (
+        cumulative_return_curve_btc, 
+        cumulative_return_curve_doge
+    ) = make_cumulative_curve()
     
-    # xxx
-    price_curve_btc, price_curve_doge = make_price_curve()
+    # Plots for Price Curve
+    (
+        price_curve_btc, 
+        price_curve_doge
+    ) = make_price_curve()
     
-    # xxx
-    rf_ema_closing_prices, rf_ema_daily_return_volatility, rf_plot3, rf_plot4, rf_plot5, rf_plot6, rf_plot7 = make_random_forest()
+    # Plots for Random Forest (price only, no tweets)
+    (
+        rf_ema_closing_prices, 
+        rf_ema_daily_return_volatility, 
+        rf_bollinger_closing_prices, 
+        rf_predicted_vs_actual, 
+        rf_predicted_vs_actual_last_ten, 
+        rf_cumulative_return 
+    ) = make_random_forest()
 
-    # xxx
+    # Plots for Fixed Strategy
     (
         entry_exit_price_plot_btc,
         entry_exit_portfolio_plot_btc,
@@ -54,7 +74,7 @@ def analyse(Source, Ticker):
         portfolio_evaluation_table_doge
     ) = algo_trading_fixed_strategy()
 
-    # xxx
+    # Plots for RNN strategy
     (
         rnn_predicted_positive_return_curve_btc, 
         rnn_cumulative_return_plot_btc,
@@ -62,41 +82,98 @@ def analyse(Source, Ticker):
         rnn_cumulative_return_plot_doge
     ) = load_algo_trading_result_rnn()
 
-    # xxx
+    # Plots for Random Forest strategy
     (
         rf_predicted_positive_return_curve_btc, 
         rf_cumulative_return_plot_btc,
         rf_predicted_positive_return_curve_doge, 
         rf_cumulative_return_plot_doge
     ) = load_algo_trading_result_rf()
-
+    
     
     ## Create a dashboard (lower half interface in the app) to visualise the plots
-    dashboard = build_dashboard(
-                                tweeting_price_curve_doge, 
-                                tweeting_price_curve_btc, 
-                                cumulative_return_curve_doge, 
-                                cumulative_return_curve_btc, 
-                                price_curve_btc, 
-                                price_curve_doge, 
-                                rf_ema_closing_prices,
-                                rf_ema_daily_return_volatility,
-                                rf_plot3,
-                                rf_plot4,
-                                rf_plot5,
-                                rf_plot6,
-                                rf_plot7
-                                # Add more plots here, remember to match the build_dashboard file too
-                                )
+    # Return the dashboard appropriate for the ticker selected by the user
+    if Ticker == 'Bitcoin':
+        dashboard = build_dashboard_btc(
+                                            tweeting_price_curve_btc, 
+                                            tweeting_price_curve_doge,
 
-    ## Return the dashboard
+                                            cumulative_return_curve_btc, 
+                                            cumulative_return_curve_doge,
+
+                                            price_curve_btc, 
+                                            price_curve_doge,
+
+                                            rf_ema_closing_prices,
+                                            rf_ema_daily_return_volatility,
+                                            rf_bollinger_closing_prices,
+                                            rf_predicted_vs_actual,
+                                            rf_predicted_vs_actual_last_ten,
+                                            rf_cumulative_return,
+
+                                            entry_exit_price_plot_btc,
+                                            entry_exit_portfolio_plot_btc,
+                                            portfolio_evaluation_table_btc,
+                                            entry_exit_price_plot_doge,
+                                            entry_exit_portfolio_plot_doge,
+                                            portfolio_evaluation_table_doge,
+
+                                            rnn_predicted_positive_return_curve_btc, 
+                                            rnn_cumulative_return_plot_btc,
+                                            rnn_predicted_positive_return_curve_doge, 
+                                            rnn_cumulative_return_plot_doge,
+
+                                            rf_predicted_positive_return_curve_btc, 
+                                            rf_cumulative_return_plot_btc,
+                                            rf_predicted_positive_return_curve_doge, 
+                                            rf_cumulative_return_plot_doge
+                                        )
+
+    
+    if Ticker == 'Dogecoin':
+        dashboard = build_dashboard_doge(
+                                            tweeting_price_curve_btc, 
+                                            tweeting_price_curve_doge,
+
+                                            cumulative_return_curve_btc, 
+                                            cumulative_return_curve_doge,
+
+                                            price_curve_btc, 
+                                            price_curve_doge,
+
+                                            rf_ema_closing_prices,
+                                            rf_ema_daily_return_volatility,
+                                            rf_bollinger_closing_prices,
+                                            rf_predicted_vs_actual,
+                                            rf_predicted_vs_actual_last_ten,
+                                            rf_cumulative_return,
+
+                                            entry_exit_price_plot_btc,
+                                            entry_exit_portfolio_plot_btc,
+                                            portfolio_evaluation_table_btc,
+                                            entry_exit_price_plot_doge,
+                                            entry_exit_portfolio_plot_doge,
+                                            portfolio_evaluation_table_doge,
+
+                                            rnn_predicted_positive_return_curve_btc, 
+                                            rnn_cumulative_return_plot_btc,
+                                            rnn_predicted_positive_return_curve_doge, 
+                                            rnn_cumulative_return_plot_doge,
+
+                                            rf_predicted_positive_return_curve_btc, 
+                                            rf_cumulative_return_plot_btc,
+                                            rf_predicted_positive_return_curve_doge, 
+                                            rf_cumulative_return_plot_doge
+                                        )
+    
+    # Return the dashboard
     return dashboard
 
 
-# Make interactive drop-down lists which users can choose an entrepreneur and stock/crypto from
+# Make interactive drop-down lists which users can choose a social source and crypto
 user_input = interact_manual(
                                 analyse, 
-                                Source=['Select Source', 'Elon Musk Tweets', 'Google Search Data'], 
+                                Source=['Select Source', 'Elon Musk Tweets', 'Google Trends Data'], 
                                 Ticker=['Select Ticker', 'Bitcoin', 'Dogecoin']
                             )
 

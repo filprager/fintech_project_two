@@ -1,44 +1,205 @@
 import panel as pn
 
-def build_dashboard(plot1, plot2, plot3, plot4, plot5, plot6, plot7, plot8, plot9, plot10, plot11, plot12, plot13):
 
-    
+def build_dashboard_btc(
+    tweeting_price_curve_btc, 
+    tweeting_price_curve_doge,
+
+    cumulative_return_curve_btc, 
+    cumulative_return_curve_doge,
+
+    price_curve_btc, 
+    price_curve_doge,
+
+    rf_ema_closing_prices,
+    rf_ema_daily_return_volatility,
+    rf_bollinger_closing_prices,
+    rf_predicted_vs_actual,
+    rf_predicted_vs_actual_last_ten,
+    rf_cumulative_return,
+
+    entry_exit_price_plot_btc,
+    entry_exit_portfolio_plot_btc,
+    portfolio_evaluation_table_btc,
+    entry_exit_price_plot_doge,
+    entry_exit_portfolio_plot_doge,
+    portfolio_evaluation_table_doge,
+
+    rnn_predicted_positive_return_curve_btc, 
+    rnn_cumulative_return_plot_btc,
+    rnn_predicted_positive_return_curve_doge, 
+    rnn_cumulative_return_plot_doge,
+
+    rf_predicted_positive_return_curve_btc, 
+    rf_cumulative_return_plot_btc,
+    rf_predicted_positive_return_curve_doge, 
+    rf_cumulative_return_plot_doge
+):
+
+    '''
+    Make panel layout for BTC
+    Returns: Panel layout
+    '''
     # Content for tab_one
     tab_one = pn.Column(
-        plot1,
-        plot2,
-        plot3
+        tweeting_price_curve_btc, 
+#         tweeting_price_curve_doge,
+
+        cumulative_return_curve_btc, 
+#         cumulative_return_curve_doge,
+
+        price_curve_btc, 
+#         price_curve_doge,
     )
     
     # Content for tab_two
     tab_two = pn.Column(
-        plot4,
-        plot5, 
-        plot6
+        rf_ema_closing_prices,
+        rf_ema_daily_return_volatility,
+        rf_bollinger_closing_prices,
+        rf_predicted_vs_actual,
+        rf_predicted_vs_actual_last_ten,
+        rf_cumulative_return,
+#         rf_cumulative_return_with_capital,
     )
     
     # Content for tab_three
     tab_three = pn.Column(
-        plot7,
-        plot8,
-        plot9
+        entry_exit_price_plot_btc,
+        entry_exit_portfolio_plot_btc,
+        portfolio_evaluation_table_btc,
+#         entry_exit_price_plot_doge,
+#         entry_exit_portfolio_plot_doge,
+#         portfolio_evaluation_table_doge,
     )
 
     # Content for tab_four
     tab_four = pn.Column(
-        plot10,
-        plot11,
-        plot12,
-        plot13
+        rnn_predicted_positive_return_curve_btc, 
+        rnn_cumulative_return_plot_btc,
+#         rnn_predicted_positive_return_curve_doge, 
+#         rnn_cumulative_return_plot_doge,
     )
     
-    
+  
+    # Content for tab_five
+    tab_five = pn.Column(
+        rf_predicted_positive_return_curve_btc, 
+        rf_cumulative_return_plot_btc,
+#         rf_predicted_positive_return_curve_doge, 
+#         rf_cumulative_return_plot_doge
+    )
+
     # Combined dashboard of all tabs
-    dashboard = pn.Tabs(
-        ('Tab 1 name here', tab_one),
-        ('Tab 2 name here', tab_two),
-        ('Tab 3 name here', tab_three),
-        ('Tab 4 name here', tab_four)
+    dashboard_btc = pn.Tabs(
+        ('General Insights', tab_one),
+        ('Random Forest - Price Only', tab_two),
+        ('Fixed Strategy', tab_three),
+        ('RNN Strategy', tab_four),
+        ('RF Strategy', tab_five),
     )
     
-    return dashboard
+    return dashboard_btc
+
+    # _________________________________________________________________________________________________________________________________________________________ 
+
+
+def build_dashboard_doge(
+    tweeting_price_curve_btc, 
+    tweeting_price_curve_doge,
+
+    cumulative_return_curve_btc, 
+    cumulative_return_curve_doge,
+
+    price_curve_btc, 
+    price_curve_doge,
+
+    rf_ema_closing_prices,
+    rf_ema_daily_return_volatility,
+    rf_bollinger_closing_prices,
+    rf_predicted_vs_actual,
+    rf_predicted_vs_actual_last_ten,
+    rf_cumulative_return,
+
+    entry_exit_price_plot_btc,
+    entry_exit_portfolio_plot_btc,
+    portfolio_evaluation_table_btc,
+    entry_exit_price_plot_doge,
+    entry_exit_portfolio_plot_doge,
+    portfolio_evaluation_table_doge,
+
+    rnn_predicted_positive_return_curve_btc, 
+    rnn_cumulative_return_plot_btc,
+    rnn_predicted_positive_return_curve_doge, 
+    rnn_cumulative_return_plot_doge,
+
+    rf_predicted_positive_return_curve_btc, 
+    rf_cumulative_return_plot_btc,
+    rf_predicted_positive_return_curve_doge, 
+    rf_cumulative_return_plot_doge
+):
+
+    '''
+    Make panel layout for Doge
+    Returns: Panel layout
+    '''
+    # Content for tab_one
+    tab_one = pn.Column(
+#         tweeting_price_curve_btc, 
+        tweeting_price_curve_doge,
+
+#         cumulative_return_curve_btc, 
+        cumulative_return_curve_doge,
+
+#         price_curve_btc, 
+        price_curve_doge,
+    )
+    
+#     # Content for tab_two
+#     tab_two = pn.Column(
+#         rf_ema_closing_prices,
+#         rf_ema_daily_return_volatility,
+#         rf_bollinger_closing_prices,
+#         rf_predicted_vs_actual,
+#         rf_predicted_vs_actual_last_ten,
+#         rf_cumulative_return,
+#         rf_cumulative_return_with_capital,
+#     )
+    
+    # Content for tab_three
+    tab_three = pn.Column(
+#         entry_exit_price_plot_btc,
+#         entry_exit_portfolio_plot_btc,
+#         portfolio_evaluation_table_btc,
+        entry_exit_price_plot_doge,
+        entry_exit_portfolio_plot_doge,
+        portfolio_evaluation_table_doge,
+    )
+
+    # Content for tab_four
+    tab_four = pn.Column(
+#         rnn_predicted_positive_return_curve_btc, 
+#         rnn_cumulative_return_plot_btc,
+        rnn_predicted_positive_return_curve_doge, 
+        rnn_cumulative_return_plot_doge,
+    )
+    
+  
+    # Content for tab_five
+    tab_five = pn.Column(
+#         rf_predicted_positive_return_curve_btc, 
+#         rf_cumulative_return_plot_btc,
+        rf_predicted_positive_return_curve_doge, 
+        rf_cumulative_return_plot_doge
+    )
+
+    # Combined dashboard of all tabs
+    dashboard_doge = pn.Tabs(
+        ('General Insights', tab_one),
+#         ('Random Forest - Price Only', tab_two),
+        ('Fixed Strategy', tab_three),
+        ('RNN Strategy', tab_four),
+        ('RF Strategy', tab_five),
+    )
+    
+    return dashboard_doge
