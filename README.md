@@ -1,4 +1,4 @@
-#FINTECH PROJECT TWO
+
 ![Image](https://raw.githubusercontent.com/filprager/fintech_project_two/layout/image/Etm4yFZUcAAoN5u.jpeg)
 
 
@@ -18,20 +18,6 @@ Silicon Valley tech entrepreneurs tweets (e.g. from Elon Musk, Jack Dorsey etc) 
 
 ## Goal
 A web app (or Chatbot)  where a user can choose to analyse the historical stock/crypto price correlation to what a selected tech entrepreneur has said recently, and get an auto trading strategy based on it.
-
-## Installation requirements
-
-`pandas` 
-
-`pathlib`
-
-`hvplot`
-
-`tensor flow`
-
-`sklearn`
-
-`numpy`
 
 
 ## Workflow
@@ -59,4 +45,12 @@ A web app (or Chatbot)  where a user can choose to analyse the historical stock/
     - A table showing pottfolio metrics
 
 
+## libraries Used
 
+`pandas` , `pathlib` , `hvplot`,  `tensorflow` ,  `sklearn`,`dotenv` , `numpy` , `random `, `os` , `json`, `pickle`,`re` `time` , `bs4 `,`urllib`, `requests`, `datetime`,  `sys` , `collections`
+
+
+
+## APIs Used
+
+`Twitter API `,  `Cryptocompare API`
