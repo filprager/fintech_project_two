@@ -40,7 +40,7 @@ def make_tweeting_price_curve():
 
     # Overlay plots for Dogecoin
     tweeting_price_curve_doge = price_curve_doge * tweeting_doge
-    tweeting_price_curve_doge.opts(width=1000, height=400, title='When Elon Musk tweets about Dogecoin', ylabel='Price in $', shared_axes=False)
+    tweeting_price_curve_doge.opts(width=1000, height=400, title='When Elon Musk tweets about Dogecoin', ylabel='Dogecoin Price in USD', shared_axes=False)
 
     # Load data for Bitcoin
     df_elon_btc = pd.read_pickle('./data/elon_btc.plk')
@@ -68,7 +68,7 @@ def make_tweeting_price_curve():
 
     # Overlay plots for Bitcoin
     tweeting_price_curve_btc = price_curve_btc * tweeting_point_btc
-    tweeting_price_curve_btc.opts(width=1000, height=400, title='When Elon Musk tweets about Bitcoin', ylabel='Price in $', shared_axes=False)
+    tweeting_price_curve_btc.opts(width=1000, height=400, title='When Elon Musk tweets about Bitcoin', ylabel='Bitcoin Price in USD', shared_axes=False)
 
     # Return tweeting vs price curves
     return tweeting_price_curve_btc, tweeting_price_curve_doge
@@ -106,7 +106,7 @@ def make_cumulative_curve():
     cumulative_doge_curve =cumulative_returns.hvplot(
         width=1000, height=400,
         title='Cumulative Returns for Dogecoin',
-        ylabel='Returns',
+        ylabel='%',
         shared_axes=False
     )
     
@@ -132,7 +132,7 @@ def make_cumulative_curve():
     cumulative_bitcoin_curve = cumulative_returns.hvplot(
         width=1000, height=400, 
         title='Cumulative Returns for Bitcoin', 
-        ylabel='Returns', 
+        ylabel='%', 
         shared_axes=False
     )
 
@@ -435,7 +435,7 @@ def algo_trading_fixed_strategy():
 
     # Overlay plots
     entry_exit_price_plot_doge = security_close * entry * exit
-    entry_exit_price_plot_doge.opts(width=1000, title='Entry/Exit vs Price')
+    entry_exit_price_plot_doge.opts(width=1000, title='Entry/Exit vs Price', ylabel='Dogecoin Price in USD')
 
     # Set initial capital
     initial_capital = float(100000)
@@ -483,14 +483,15 @@ def algo_trading_fixed_strategy():
     # Visualize total portoflio value for the investment
     total_portfolio_value = signals_df_doge[['Portfolio Total']].hvplot(
         line_color='lightgray',
-        ylabel='Total Portfolio Value',
+        ylabel='Total Portfolio Value in $',
         width=1000,
-        height=400
+        height=400,
+        yformatter='%.0f'
     )
 
     # Overlay plots
     entry_exit_portfolio_plot_doge = total_portfolio_value * entry * exit
-    entry_exit_portfolio_plot_doge.opts(width=1000, title='Entry/Exit vs Total Portfolio Value')
+    entry_exit_portfolio_plot_doge.opts(width=1000, title='Entry/Exit vs Total Portfolio Value ($100,000 Initial Investment)')
 
     # Prepare DataFrame for metrics
     metrics = [
@@ -584,7 +585,7 @@ def algo_trading_fixed_strategy():
 
     # Overlay plots
     entry_exit_price_plot_btc = security_close * entry * exit
-    entry_exit_price_plot_btc.opts(width=1000, title='Entry/Exit vs Price')
+    entry_exit_price_plot_btc.opts(width=1000, title='Entry/Exit vs Price', ylabel='Bitcoin Price in USD')
 
     # Set initial capital
     initial_capital = float(100000)
@@ -634,14 +635,15 @@ def algo_trading_fixed_strategy():
     # Visualize total portoflio value for the investment
     total_portfolio_value = signals_df_btc[['Portfolio Total']].hvplot(
         line_color='lightgray',
-        ylabel='Total Portfolio Value',
+        ylabel='Total Portfolio Value in $',
         width=1000,
-        height=400
+        height=400,
+        yformatter='%.0f'
     )
 
     # Overlay plots
     entry_exit_portfolio_plot_btc = total_portfolio_value * entry * exit
-    entry_exit_portfolio_plot_btc.opts(width=1000, title='Entry/Exit vs Total Portfolio Value')
+    entry_exit_portfolio_plot_btc.opts(width=1000, title='Entry/Exit vs Total Portfolio Value ($100,000 Initial Investment)')
 
     # Prepare DataFrame for metrics
     metrics = [
@@ -719,9 +721,9 @@ def load_algo_trading_result_rnn():
 
     # Meke predicted positive return curve
     rnn_predicted_positive_return_curve_doge = result['Predicted Positive Return'].hvplot(
-        title='Dogecoin Predicted Positive Return',
+        title='Predicted Price Rise/Fall for Dogecoin (1 for Rise, -1 for Fall)',
         width=1000, height=400,
-        ylabel='Returns',
+        ylabel='Predicted Price Rise/Fall',
         shared_axes=False
     )
     rnn_predicted_positive_return_curve_doge
@@ -731,9 +733,9 @@ def load_algo_trading_result_rnn():
     cumulative_return
 
     rnn_cumulative_return_plot_doge = cumulative_return.hvplot(
-        title='Dogecoin Cumulative Returns',
+        title='Cumulative Returns for Dogecoin Investment',
         width=1000, height=400,
-        ylabel='Returns',
+        ylabel='%',
         shared_axes=False
     )
     rnn_cumulative_return_plot_doge
@@ -746,9 +748,9 @@ def load_algo_trading_result_rnn():
 
     # Meke predicted positive return curve
     rnn_predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(
-        title='Bitcoin Predicted Positive Return',
+        title='Predicted Price Rise/Fall for Bitcoin (1 for Rise, -1 for Fall)',
         width=1000, height=400,
-        ylabel='Returns',
+        ylabel='Predicted Price Rise/Fall ',
         shared_axes=False
     )
     rnn_predicted_positive_return_curve_btc
@@ -758,9 +760,9 @@ def load_algo_trading_result_rnn():
     cumulative_return
 
     rnn_cumulative_return_plot_btc = cumulative_return.hvplot(
-        title='Bitcoin Cumulative Returns',
+        title='Cumulative Returns for Bitcoin Investment',
         width=1000, height=400,
-        ylabel='Returns',
+        ylabel='%',
         shared_axes=False
     )
     rnn_cumulative_return_plot_btc
@@ -797,24 +799,23 @@ def load_algo_trading_result_rf():
 
     # Meke predicted positive return curve
     rf_predicted_positive_return_curve_doge = result['Predicted Positive Return'].hvplot(
-        title='Dogecoin Predicted Positive Return',
+        title='Predicted Price Rise/Fall for Dogecoin (1 for Rise, -1 for Fall)',
         width=1000, height=400,
-        ylabel='Returns',
+        ylabel='Predicted Price Rise/Fall',
         shared_axes=False
     )
-    rf_predicted_positive_return_curve_doge
+
 
     # Calculate cumulative return of model and plot the result
     cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
     cumulative_return
 
     rf_cumulative_return_plot_doge = cumulative_return.hvplot(
-        title='Dogecoin Cumulative Returns',
+        title='Cumulative Returns for Dogecoin Investment',
         width=1000, height=400,
-        ylabel='Returns',
+        ylabel='%',
         shared_axes=False
     )
-    rf_cumulative_return_plot_doge
 
     # ----------------- Bitcoin Section -----------------
 
@@ -824,24 +825,21 @@ def load_algo_trading_result_rf():
 
     # Meke predicted positive return curve
     rf_predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(
-        title='Bitcoin Predicted Positive Return',
+        title='Predicted Price Rise/Fall for Bitcoin (1 for Rise, -1 for Fall)',
         width=1000, height=400,
-        ylabel='Returns',
+        ylabel='Predicted Price Rise/Fall',
         shared_axes=False
     )
-    rf_predicted_positive_return_curve_btc
 
     # Calculate cumulative return of model and plot the result
     cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
-    cumulative_return
 
     rf_cumulative_return_plot_btc = cumulative_return.hvplot(
-        title='Bitcoin Cumulative Returns',
+        title='Cumulative Returns for Bitcoin Investment',
         width=1000, height=400,
-        ylabel='Returns',
+        ylabel='%',
         shared_axes=False
     )
-    rf_cumulative_return_plot_btc
 
     # Retrn plots
     return (

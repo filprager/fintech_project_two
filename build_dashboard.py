@@ -48,8 +48,8 @@ def build_dashboard_btc(
         cumulative_return_curve_btc, 
 #         cumulative_return_curve_doge,
 
-        price_curve_btc, 
-#         price_curve_doge,
+        # Word cloud
+        '### What Elon Musk recently said about Bitcoin on Twitter ![Image](https://github.com/filprager/fintech_project_two/blob/main/image/wordcloud_bitcoin.png?raw=true)'
     )
     
     # Content for tab_two
@@ -65,6 +65,7 @@ def build_dashboard_btc(
     
     # Content for tab_three
     tab_three = pn.Column(
+        '## Buy whenever Elon Musk tweets about Bitcoin, and sell after 24 hours',
         entry_exit_price_plot_btc,
         entry_exit_portfolio_plot_btc,
         portfolio_evaluation_table_btc,
@@ -75,6 +76,7 @@ def build_dashboard_btc(
 
     # Content for tab_four
     tab_four = pn.Column(
+        '## Long when the model predicts the price to rise, and short when the model predicts the price to fall',
         rnn_predicted_positive_return_curve_btc, 
         rnn_cumulative_return_plot_btc,
 #         rnn_predicted_positive_return_curve_doge, 
@@ -84,6 +86,7 @@ def build_dashboard_btc(
   
     # Content for tab_five
     tab_five = pn.Column(
+        '## Long when the model predicts the price to rise, and short when the model predicts the price to fall',
         rf_predicted_positive_return_curve_btc, 
         rf_cumulative_return_plot_btc,
 #         rf_predicted_positive_return_curve_doge, 
@@ -151,8 +154,9 @@ def build_dashboard_doge(
 #         cumulative_return_curve_btc, 
         cumulative_return_curve_doge,
 
-#         price_curve_btc, 
-        price_curve_doge,
+        # Word cloud
+        '### What Elon Musk recently said about Dogecoin on Twitter ![Image](https://github.com/filprager/fintech_project_two/blob/main/image/wordcloud_doge.png?raw=true)'
+
     )
     
 #     # Content for tab_two
@@ -168,6 +172,7 @@ def build_dashboard_doge(
     
     # Content for tab_three
     tab_three = pn.Column(
+        '## Buy whenever Elon Musk tweets about Dogecoin, and sell after 24 hours',
 #         entry_exit_price_plot_btc,
 #         entry_exit_portfolio_plot_btc,
 #         portfolio_evaluation_table_btc,
@@ -180,6 +185,7 @@ def build_dashboard_doge(
     tab_four = pn.Column(
 #         rnn_predicted_positive_return_curve_btc, 
 #         rnn_cumulative_return_plot_btc,
+        '## Long when the model predicts the price to rise, and short when the model predicts the price to fall',
         rnn_predicted_positive_return_curve_doge, 
         rnn_cumulative_return_plot_doge,
     )
@@ -189,6 +195,7 @@ def build_dashboard_doge(
     tab_five = pn.Column(
 #         rf_predicted_positive_return_curve_btc, 
 #         rf_cumulative_return_plot_btc,
+        '## Long when the model predicts the price to rise, and short when the model predicts the price to fall',
         rf_predicted_positive_return_curve_doge, 
         rf_cumulative_return_plot_doge
     )
