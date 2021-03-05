@@ -11,13 +11,19 @@ def build_dashboard_btc(
     price_curve_btc, 
     price_curve_doge,
 
-    rf_ema_closing_prices,
-    rf_ema_daily_return_volatility,
-    rf_bollinger_closing_prices,
-    rf_predicted_vs_actual,
-    rf_predicted_vs_actual_last_ten,
-    rf_cumulative_return,
-
+    rf_ema_closing_prices_btc,
+    rf_ema_daily_return_volatility_btc,
+    rf_bollinger_closing_prices_btc,
+    rf_predicted_vs_actual_btc,
+    rf_predicted_vs_actual_last_ten_btc,
+    rf_cumulative_return_btc,
+    rf_ema_closing_prices_doge,
+    rf_ema_daily_return_volatility_doge,
+    rf_bollinger_closing_prices_doge,
+    rf_predicted_vs_actual_doge,
+    rf_predicted_vs_actual_last_ten_doge,
+    rf_cumulative_return_doge,
+    
     entry_exit_price_plot_btc,
     entry_exit_portfolio_plot_btc,
     portfolio_evaluation_table_btc,
@@ -54,13 +60,19 @@ def build_dashboard_btc(
     
     # Content for tab_two
     tab_two = pn.Column(
-        rf_ema_closing_prices,
-        rf_ema_daily_return_volatility,
-        rf_bollinger_closing_prices,
-        rf_predicted_vs_actual,
-        rf_predicted_vs_actual_last_ten,
-        rf_cumulative_return,
-#         rf_cumulative_return_with_capital,
+        rf_ema_closing_prices_btc,
+        rf_ema_daily_return_volatility_btc,
+        rf_bollinger_closing_prices_btc,
+        rf_predicted_vs_actual_btc,
+        rf_predicted_vs_actual_last_ten_btc,
+        rf_cumulative_return_btc,
+#         rf_ema_closing_prices_doge,
+#         rf_ema_daily_return_volatility_doge,
+#         rf_bollinger_closing_prices_doge,
+#         rf_predicted_vs_actual_doge,
+#         rf_predicted_vs_actual_last_ten_doge,
+#         rf_cumulative_return_doge,
+
     )
     
     # Content for tab_three
@@ -104,6 +116,7 @@ def build_dashboard_btc(
     
     return dashboard_btc
 
+
     # _________________________________________________________________________________________________________________________________________________________ 
 
 
@@ -117,12 +130,18 @@ def build_dashboard_doge(
     price_curve_btc, 
     price_curve_doge,
 
-    rf_ema_closing_prices,
-    rf_ema_daily_return_volatility,
-    rf_bollinger_closing_prices,
-    rf_predicted_vs_actual,
-    rf_predicted_vs_actual_last_ten,
-    rf_cumulative_return,
+    rf_ema_closing_prices_btc,
+    rf_ema_daily_return_volatility_btc,
+    rf_bollinger_closing_prices_btc,
+    rf_predicted_vs_actual_btc,
+    rf_predicted_vs_actual_last_ten_btc,
+    rf_cumulative_return_btc,
+    rf_ema_closing_prices_doge,
+    rf_ema_daily_return_volatility_doge,
+    rf_bollinger_closing_prices_doge,
+    rf_predicted_vs_actual_doge,
+    rf_predicted_vs_actual_last_ten_doge,
+    rf_cumulative_return_doge,
 
     entry_exit_price_plot_btc,
     entry_exit_portfolio_plot_btc,
@@ -159,16 +178,21 @@ def build_dashboard_doge(
 
     )
     
-#     # Content for tab_two
-#     tab_two = pn.Column(
-#         rf_ema_closing_prices,
-#         rf_ema_daily_return_volatility,
-#         rf_bollinger_closing_prices,
-#         rf_predicted_vs_actual,
-#         rf_predicted_vs_actual_last_ten,
-#         rf_cumulative_return,
-#         rf_cumulative_return_with_capital,
-#     )
+    # Content for tab_two
+    tab_two = pn.Column(
+#         rf_ema_closing_prices_btc,
+#         rf_ema_daily_return_volatility_btc,
+#         rf_bollinger_closing_prices_btc,
+#         rf_predicted_vs_actual_btc,
+#         rf_predicted_vs_actual_last_ten_btc,
+#         rf_cumulative_return_btc,
+        rf_ema_closing_prices_doge,
+        rf_ema_daily_return_volatility_doge,
+        rf_bollinger_closing_prices_doge,
+        rf_predicted_vs_actual_doge,
+        rf_predicted_vs_actual_last_ten_doge,
+        rf_cumulative_return_doge,
+    )
     
     # Content for tab_three
     tab_three = pn.Column(
@@ -183,9 +207,9 @@ def build_dashboard_doge(
 
     # Content for tab_four
     tab_four = pn.Column(
+        '## Long when the model predicts the price to rise, and short when the model predicts the price to fall',
 #         rnn_predicted_positive_return_curve_btc, 
 #         rnn_cumulative_return_plot_btc,
-        '## Long when the model predicts the price to rise, and short when the model predicts the price to fall',
         rnn_predicted_positive_return_curve_doge, 
         rnn_cumulative_return_plot_doge,
     )
@@ -193,9 +217,9 @@ def build_dashboard_doge(
   
     # Content for tab_five
     tab_five = pn.Column(
+        '## Long when the model predicts the price to rise, and short when the model predicts the price to fall',
 #         rf_predicted_positive_return_curve_btc, 
 #         rf_cumulative_return_plot_btc,
-        '## Long when the model predicts the price to rise, and short when the model predicts the price to fall',
         rf_predicted_positive_return_curve_doge, 
         rf_cumulative_return_plot_doge
     )
@@ -203,7 +227,7 @@ def build_dashboard_doge(
     # Combined dashboard of all tabs
     dashboard_doge = pn.Tabs(
         ('General Insights', tab_one),
-#         ('Random Forest - Price Only', tab_two),
+        ('Random Forest - Price Only', tab_two),
         ('Fixed Strategy', tab_three),
         ('RNN Strategy', tab_four),
         ('RF Strategy', tab_five),
