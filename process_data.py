@@ -100,12 +100,12 @@ def make_cumulative_curve():
     daily_returns = (df1_doge - df1_doge.shift(1)) / df1_doge.shift(1)
 
     # Calculate the cumulative returns using the 'cumprod()' function
-    cumulative_returns = (1 + daily_returns).cumprod()-1
+    cumulative_returns = ((1 + daily_returns).cumprod() - 1) * 100
     
     # Plot the daily returns of dogecoin over the last 5 years
     cumulative_doge_curve =cumulative_returns.hvplot(
         width=1000, height=400,
-        title='Cumulative Returns for Dogecoin',
+        title='Dogecoin Price Increase',
         ylabel='%',
         shared_axes=False
     )
@@ -125,13 +125,13 @@ def make_cumulative_curve():
     daily_returns = (df2_bit - df2_bit.shift(1)) / df2_bit.shift(1)
 
     #Calculate the cumulative returns using the 'cumprod()' function
-    cumulative_returns = (1 + daily_returns).cumprod()-1
+    cumulative_returns = ((1 + daily_returns).cumprod() - 1) * 100
 
 
     # Plot the daily returns of the S&P 500 over the last 2 years
     cumulative_bitcoin_curve = cumulative_returns.hvplot(
         width=1000, height=400, 
-        title='Cumulative Returns for Bitcoin', 
+        title='Bitcoin Price Increase', 
         ylabel='%', 
         shared_axes=False
     )
@@ -729,11 +729,11 @@ def load_algo_trading_result_rnn():
     rnn_predicted_positive_return_curve_doge
 
     # Calculate cumulative return of model and plot the result
-    cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
+    cumulative_return = ((1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1) * 100
     cumulative_return
 
     rnn_cumulative_return_plot_doge = cumulative_return.hvplot(
-        title='Cumulative Returns for Dogecoin Investment',
+        title='Investment Performance for Dogecoin',
         width=1000, height=400,
         ylabel='%',
         shared_axes=False
@@ -756,11 +756,11 @@ def load_algo_trading_result_rnn():
     rnn_predicted_positive_return_curve_btc
 
     # Calculate cumulative return of model and plot the result
-    cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
+    cumulative_return = ((1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1) * 100
     cumulative_return
 
     rnn_cumulative_return_plot_btc = cumulative_return.hvplot(
-        title='Cumulative Returns for Bitcoin Investment',
+        title='Investment Performance for Bitcoin',
         width=1000, height=400,
         ylabel='%',
         shared_axes=False
@@ -807,11 +807,11 @@ def load_algo_trading_result_rf():
 
 
     # Calculate cumulative return of model and plot the result
-    cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
+    cumulative_return = ((1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1) * 100
     cumulative_return
 
     rf_cumulative_return_plot_doge = cumulative_return.hvplot(
-        title='Cumulative Returns for Dogecoin Investment',
+        title='Investment Performance for Dogecoin',
         width=1000, height=400,
         ylabel='%',
         shared_axes=False
@@ -832,10 +832,10 @@ def load_algo_trading_result_rf():
     )
 
     # Calculate cumulative return of model and plot the result
-    cumulative_return = (1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1
+    cumulative_return = ((1 + (result['Daily Return'] * result['Predicted Positive Return'])).cumprod() -1) * 100
 
     rf_cumulative_return_plot_btc = cumulative_return.hvplot(
-        title='Cumulative Returns for Bitcoin Investment',
+        title='Investment Performance for Bitcoin',
         width=1000, height=400,
         ylabel='%',
         shared_axes=False
