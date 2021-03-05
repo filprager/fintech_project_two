@@ -192,7 +192,15 @@ def make_random_forest():
     Returns: A tuple of Hvplot objects.
 
     Items in the tuple:
-    @TODO: Need more polish as tweets are not taken into account for now
+    rf_ema_closing_prices
+    rf_ema_daily_return_volatility
+    rf_bollinger_closing_prices
+    rf_predicted_vs_actual
+    rf_predicted_vs_actual_last_ten
+    rf_cumulative_return
+    rf_cumulative_return_with_capital
+    
+    (BTC and Doge versions of each)
     '''
     
     # Import libraries and dependencies
@@ -203,27 +211,35 @@ def make_random_forest():
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.datasets import make_classification
 
-    rf_ema_closing_prices = None
-    rf_ema_daily_return_volatility = None
-    rf_bollinger_closing_prices = None
-    rf_predicted_vs_actual = None
-    rf_predicted_vs_actual_last_ten = None
-    rf_cumulative_return = None
-    rf_cumulative_return_with_capital = None
-
+    rf_ema_closing_prices_btc = None
+    rf_ema_daily_return_volatility_btc = None
+    rf_bollinger_closing_prices_btc = None
+    rf_predicted_vs_actual_btc = None
+    rf_predicted_vs_actual_last_ten_btc = None
+    rf_cumulative_return_btc = None
+    rf_ema_closing_prices_doge = None
+    rf_ema_daily_return_volatility_doge = None
+    rf_bollinger_closing_prices_doge = None
+    rf_predicted_vs_actual_doge = None
+    rf_predicted_vs_actual_last_ten_doge = None
+    rf_cumulative_return_doge = None
+    
+    
+    # ----------------- Dogecoin Section ----------------------------------------------------------
+    
     # Set path to Pickle and read in data
-    trading_signals_df= pd.read_pickle("data/elon_btc.plk")
+    trading_signals_df= pd.read_pickle("data/elon_doge.plk")
 
     # Drop NAs and calculate daily percent return
-    trading_signals_df['daily_return'] = trading_signals_df['Bitcoin Price'].dropna().pct_change()
+    trading_signals_df['daily_return'] = trading_signals_df['Dogecoin Price'].dropna().pct_change()
     
     # Set short and long windows
     short_window = 1
     long_window = 10
 
     # Construct a `Fast` and `Slow` Exponential Moving Average from short and long windows, respectively
-    trading_signals_df['fast_close'] = trading_signals_df['Bitcoin Price'].ewm(halflife=short_window).mean()
-    trading_signals_df['slow_close'] = trading_signals_df['Bitcoin Price'].ewm(halflife=long_window).mean()
+    trading_signals_df['fast_close'] = trading_signals_df['Dogecoin Price'].ewm(halflife=short_window).mean()
+    trading_signals_df['slow_close'] = trading_signals_df['Dogecoin Price'].ewm(halflife=long_window).mean()
 
     # Construct a crossover trading signal
     trading_signals_df['crossover_long'] = np.where(trading_signals_df['fast_close'] > trading_signals_df['slow_close'], 1.0, 0.0)
@@ -231,7 +247,7 @@ def make_random_forest():
     trading_signals_df['crossover_signal'] = trading_signals_df['crossover_long'] + trading_signals_df['crossover_short']
 
     # Plot the EMA of closing prices
-    rf_ema_closing_prices = trading_signals_df[['Bitcoin Price', 'fast_close', 'slow_close']].hvplot(title="EMA of Closing Prices", 
+    rf_ema_closing_prices_doge = trading_signals_df[['Dogecoin Price', 'fast_close', 'slow_close']].hvplot(title="EMA of Closing Prices", 
                                                                                                      ylabel="Price in $", 
                                                                                                      width = 1200, height = 400, 
                                                                                                      shared_axes=False).opts(yformatter="%.1f")
@@ -250,7 +266,7 @@ def make_random_forest():
     trading_signals_df['vol_trend_signal'] = trading_signals_df['vol_trend_long'] + trading_signals_df['vol_trend_short']
 
     # Plot the EMA of daily return volatility
-    rf_ema_daily_return_volatility = trading_signals_df[['fast_vol', 'slow_vol']].hvplot(title="EMA of Daily Return Volatility", 
+    rf_ema_daily_return_volatility_doge = trading_signals_df[['fast_vol', 'slow_vol']].hvplot(title="EMA of Daily Return Volatility", 
                                                                                        ylabel="Volatility", 
                                                                                        width = 1200, height = 400, 
                                                                                        shared_axes=False).opts(yformatter="%.2f")
@@ -259,20 +275,20 @@ def make_random_forest():
     bollinger_window = 20
 
     # Calculate rolling mean and standard deviation
-    trading_signals_df['bollinger_mid_band'] = trading_signals_df['Bitcoin Price'].rolling(window=bollinger_window).mean()
-    trading_signals_df['bollinger_std'] = trading_signals_df['Bitcoin Price'].rolling(window=20).std()
+    trading_signals_df['bollinger_mid_band'] = trading_signals_df['Dogecoin Price'].rolling(window=bollinger_window).mean()
+    trading_signals_df['bollinger_std'] = trading_signals_df['Dogecoin Price'].rolling(window=20).std()
 
     # Calculate upper and lowers bands of bollinger band
     trading_signals_df['bollinger_upper_band']  = trading_signals_df['bollinger_mid_band'] + (trading_signals_df['bollinger_std'] * 1)
     trading_signals_df['bollinger_lower_band']  = trading_signals_df['bollinger_mid_band'] - (trading_signals_df['bollinger_std'] * 1)
 
     # Calculate bollinger band trading signal
-    trading_signals_df['bollinger_long'] = np.where(trading_signals_df['Bitcoin Price'] < trading_signals_df['bollinger_lower_band'], 1.0, 0.0)
-    trading_signals_df['bollinger_short'] = np.where(trading_signals_df['Bitcoin Price'] > trading_signals_df['bollinger_upper_band'], -1.0, 0.0)
+    trading_signals_df['bollinger_long'] = np.where(trading_signals_df['Dogecoin Price'] < trading_signals_df['bollinger_lower_band'], 1.0, 0.0)
+    trading_signals_df['bollinger_short'] = np.where(trading_signals_df['Dogecoin Price'] > trading_signals_df['bollinger_upper_band'], -1.0, 0.0)
     trading_signals_df['bollinger_signal'] = trading_signals_df['bollinger_long'] + trading_signals_df['bollinger_short']
 
     # Plot the Bollinger Bands for closing prices
-    rf_bollinger_closing_prices = trading_signals_df[['Bitcoin Price','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].hvplot(title="Bollinger Bands for Closing Prices", 
+    rf_bollinger_closing_prices_doge = trading_signals_df[['Dogecoin Price','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].hvplot(title="Bollinger Bands for Closing Prices", 
                                                                                                                                                    ylabel="Price in $", 
                                                                                                                                                    width = 1200, height = 400, 
                                                                                                                                                    shared_axes=False).opts(yformatter="%.1f")
@@ -329,13 +345,13 @@ def make_random_forest():
     results = pd.concat([results, trading_signals_df["daily_return"]], axis=1, join="inner")
 
     # Plot predicted results vs. actual results
-    rf_predicted_vs_actual = results[['Actual Value', 'Predicted Value']].hvplot(title="Predicted vs Actual results", 
+    rf_predicted_vs_actual_doge = results[['Actual Value', 'Predicted Value']].hvplot(title="Predicted vs Actual results", 
                                                                                ylabel="Binary", 
                                                                                width = 1200, height = 400, 
                                                                                shared_axes=False).opts(yformatter="%.1f")
 
     # Plot last 10 records of predicted vs. actual results
-    rf_predicted_vs_actual_last_ten = results[['Actual Value', 'Predicted Value']].tail(10).hvplot(title="Predicted vs Actual results for last 10 records", 
+    rf_predicted_vs_actual_last_ten_doge = results[['Actual Value', 'Predicted Value']].tail(10).hvplot(title="Predicted vs Actual results for last 10 records", 
                                                                                                     ylabel="Binary", 
                                                                                                     width = 1200, height = 400, 
                                                                                                     shared_axes=False).opts(yformatter="%.1f")
@@ -344,7 +360,161 @@ def make_random_forest():
     results['Predicted Value'].replace(0, -1, inplace=True)
 
     # Calculate cumulative return of model and plot the result
-    rf_cumulative_return = (1 + (results['daily_return'] * results['Predicted Value'])).cumprod().hvplot(title="Cumulative Return", 
+    rf_cumulative_return_doge = (1 + (results['daily_return'] * results['Predicted Value'])).cumprod().hvplot(title="Cumulative Return", 
+                                                                                             ylabel="Return", 
+                                                                                             width = 1200, height = 400, 
+                                                                                             shared_axes=False).opts(yformatter="%.1f")
+    
+#     ## -------Apply this function if you wish to set an initial capital from the user (not used in current app)-------
+#     # Set initial capital allocation
+#     initial_capital = 100000  ## <- replace this with user entered value!
+
+#     # Plot cumulative return of model in terms of capital
+#     cumulative_return_capital = initial_capital * (1 + (results['daily_return'] * results['Predicted Value'])).cumprod()
+#     rf_cumulative_return_with_capital = cumulative_return_capital.hvplot(title="Title - change me", 
+#                                                 ylabel="Y label - change me", 
+#                                                 width = 1200, height = 400, 
+#                                                 shared_axes=False).opts(yformatter="%.1f")
+
+
+    
+    
+    # ----------------- Bitcoin Section ----------------------------------------------------------
+    
+    # Set path to Pickle and read in data
+    trading_signals_df= pd.read_pickle("data/elon_btc.plk")
+
+    # Drop NAs and calculate daily percent return
+    trading_signals_df['daily_return'] = trading_signals_df['Bitcoin Price'].dropna().pct_change()
+    
+    # Set short and long windows
+    short_window = 1
+    long_window = 10
+
+    # Construct a `Fast` and `Slow` Exponential Moving Average from short and long windows, respectively
+    trading_signals_df['fast_close'] = trading_signals_df['Bitcoin Price'].ewm(halflife=short_window).mean()
+    trading_signals_df['slow_close'] = trading_signals_df['Bitcoin Price'].ewm(halflife=long_window).mean()
+
+    # Construct a crossover trading signal
+    trading_signals_df['crossover_long'] = np.where(trading_signals_df['fast_close'] > trading_signals_df['slow_close'], 1.0, 0.0)
+    trading_signals_df['crossover_short'] = np.where(trading_signals_df['fast_close'] < trading_signals_df['slow_close'], -1.0, 0.0)
+    trading_signals_df['crossover_signal'] = trading_signals_df['crossover_long'] + trading_signals_df['crossover_short']
+
+    # Plot the EMA of closing prices
+    rf_ema_closing_prices_btc = trading_signals_df[['Bitcoin Price', 'fast_close', 'slow_close']].hvplot(title="EMA of Closing Prices", 
+                                                                                                     ylabel="Price in $", 
+                                                                                                     width = 1200, height = 400, 
+                                                                                                     shared_axes=False).opts(yformatter="%.1f")
+    
+    # Set short and long volatility windows
+    short_vol_window = 1
+    long_vol_window = 10
+
+    # Construct a `Fast` and `Slow` Exponential Moving Average from short and long windows, respectively
+    trading_signals_df['fast_vol'] = trading_signals_df['daily_return'].ewm(halflife=short_vol_window).std()
+    trading_signals_df['slow_vol'] = trading_signals_df['daily_return'].ewm(halflife=long_vol_window).std()
+
+    # Construct a crossover trading signal
+    trading_signals_df['vol_trend_long'] = np.where(trading_signals_df['fast_vol'] < trading_signals_df['slow_vol'], 1.0, 0.0)
+    trading_signals_df['vol_trend_short'] = np.where(trading_signals_df['fast_vol'] > trading_signals_df['slow_vol'], -1.0, 0.0) 
+    trading_signals_df['vol_trend_signal'] = trading_signals_df['vol_trend_long'] + trading_signals_df['vol_trend_short']
+
+    # Plot the EMA of daily return volatility
+    rf_ema_daily_return_volatility_btc = trading_signals_df[['fast_vol', 'slow_vol']].hvplot(title="EMA of Daily Return Volatility", 
+                                                                                       ylabel="Volatility", 
+                                                                                       width = 1200, height = 400, 
+                                                                                       shared_axes=False).opts(yformatter="%.2f")
+    
+    # Set bollinger band window
+    bollinger_window = 20
+
+    # Calculate rolling mean and standard deviation
+    trading_signals_df['bollinger_mid_band'] = trading_signals_df['Bitcoin Price'].rolling(window=bollinger_window).mean()
+    trading_signals_df['bollinger_std'] = trading_signals_df['Bitcoin Price'].rolling(window=20).std()
+
+    # Calculate upper and lowers bands of bollinger band
+    trading_signals_df['bollinger_upper_band']  = trading_signals_df['bollinger_mid_band'] + (trading_signals_df['bollinger_std'] * 1)
+    trading_signals_df['bollinger_lower_band']  = trading_signals_df['bollinger_mid_band'] - (trading_signals_df['bollinger_std'] * 1)
+
+    # Calculate bollinger band trading signal
+    trading_signals_df['bollinger_long'] = np.where(trading_signals_df['Bitcoin Price'] < trading_signals_df['bollinger_lower_band'], 1.0, 0.0)
+    trading_signals_df['bollinger_short'] = np.where(trading_signals_df['Bitcoin Price'] > trading_signals_df['bollinger_upper_band'], -1.0, 0.0)
+    trading_signals_df['bollinger_signal'] = trading_signals_df['bollinger_long'] + trading_signals_df['bollinger_short']
+
+    # Plot the Bollinger Bands for closing prices
+    rf_bollinger_closing_prices_btc = trading_signals_df[['Bitcoin Price','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].hvplot(title="Bollinger Bands for Closing Prices", 
+                                                                                                                                                   ylabel="Price in $", 
+                                                                                                                                                   width = 1200, height = 400, 
+                                                                                                                                                   shared_axes=False).opts(yformatter="%.1f")
+
+    # Set x variable list of features
+    x_var_list = ['crossover_signal', 'vol_trend_signal', 'bollinger_signal']
+
+    # Filter by x-variable list
+    trading_signals_df[x_var_list].tail()
+
+    # Shift DataFrame values by 1
+    trading_signals_df[x_var_list] = trading_signals_df[x_var_list].shift(1)
+    trading_signals_df[x_var_list].tail()
+
+    # Drop NAs and replace positive/negative infinity values
+    trading_signals_df.dropna(subset=x_var_list, inplace=True)
+    trading_signals_df.dropna(subset=['daily_return'], inplace=True)
+    trading_signals_df = trading_signals_df.replace([np.inf, -np.inf], np.nan)
+
+    # Construct the dependent variable where if daily return is greater than 0, then 1, else, 0.
+    trading_signals_df['Positive Return'] = np.where(trading_signals_df['daily_return'] > 0, 1.0, 0.0)
+
+    # Construct training start and end dates
+    training_start = trading_signals_df.index.min().strftime(format= '%Y-%m-%d')
+    training_end = '2021-01-29'
+
+    # Construct testing start and end dates
+    testing_start =  '2021-01-30'
+    testing_end = trading_signals_df.index.max().strftime(format= '%Y-%m-%d')
+
+    # Construct the x train and y train datasets
+    x_train = trading_signals_df[x_var_list][training_start:training_end]
+    y_train = trading_signals_df['Positive Return'][training_start:training_end]
+
+    # Construct the x test and y test datasets
+    x_test = trading_signals_df[x_var_list][testing_start:testing_end]
+    y_test = trading_signals_df['Positive Return'][testing_start:testing_end]
+
+    # Fit a SKLearn linear regression using just the training set (x_train, y_train):
+    model = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=0)
+    model.fit(x_train, y_train)
+
+    # Make a prediction of "y" values from the x test dataset
+    predictions = model.predict(x_test)
+
+    # Assemble actual y data (y_test) with predicted y data (from just above) into two columns in a dataframe:
+    results = y_test.to_frame()
+    results["Predicted Value"] = predictions
+
+    # Rename 'Positive Return' column to 'Actual Value' to be more descriptive for the plots below
+    results.rename(columns={'Positive Return': 'Actual Value'}, inplace=True)
+
+    # Add 'Return' column from trading_signals_df for the plots below
+    results = pd.concat([results, trading_signals_df["daily_return"]], axis=1, join="inner")
+
+    # Plot predicted results vs. actual results
+    rf_predicted_vs_actual_btc = results[['Actual Value', 'Predicted Value']].hvplot(title="Predicted vs Actual results", 
+                                                                               ylabel="Binary", 
+                                                                               width = 1200, height = 400, 
+                                                                               shared_axes=False).opts(yformatter="%.1f")
+
+    # Plot last 10 records of predicted vs. actual results
+    rf_predicted_vs_actual_last_ten_btc = results[['Actual Value', 'Predicted Value']].tail(10).hvplot(title="Predicted vs Actual results for last 10 records", 
+                                                                                                    ylabel="Binary", 
+                                                                                                    width = 1200, height = 400, 
+                                                                                                    shared_axes=False).opts(yformatter="%.1f")
+
+    # Replace predicted values 0 to -1 to account for shorting
+    results['Predicted Value'].replace(0, -1, inplace=True)
+
+    # Calculate cumulative return of model and plot the result
+    rf_cumulative_return_btc = (1 + (results['daily_return'] * results['Predicted Value'])).cumprod().hvplot(title="Cumulative Return", 
                                                                                              ylabel="Return", 
                                                                                              width = 1200, height = 400, 
                                                                                              shared_axes=False).opts(yformatter="%.1f")
@@ -361,7 +531,20 @@ def make_random_forest():
 #                                                 shared_axes=False).opts(yformatter="%.1f")
     
     
-    return rf_ema_closing_prices, rf_ema_daily_return_volatility, rf_bollinger_closing_prices, rf_predicted_vs_actual, rf_predicted_vs_actual_last_ten, rf_cumulative_return
+    return (
+            rf_ema_closing_prices_btc, 
+            rf_ema_daily_return_volatility_btc, 
+            rf_bollinger_closing_prices_btc, 
+            rf_predicted_vs_actual_btc, 
+            rf_predicted_vs_actual_last_ten_btc, 
+            rf_cumulative_return_btc,
+            rf_ema_closing_prices_doge, 
+            rf_ema_daily_return_volatility_doge, 
+            rf_bollinger_closing_prices_doge, 
+            rf_predicted_vs_actual_doge, 
+            rf_predicted_vs_actual_last_ten_doge, 
+            rf_cumulative_return_doge, 
+    )
 
     
     # _________________________________________________________________________________________________________________________________________________________
