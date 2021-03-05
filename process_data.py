@@ -40,7 +40,7 @@ def make_tweeting_price_curve():
 
     # Overlay plots for Dogecoin
     tweeting_price_curve_doge = price_curve_doge * tweeting_doge
-    tweeting_price_curve_doge.opts(width=1000, height=400, title='When Elon Musk tweets about Dogecoin', ylabel='Price in $', shared_axes=False)
+    tweeting_price_curve_doge.opts(width=1000, height=400, title='When Elon Musk tweets about Dogecoin', ylabel='Dogecoin Price in USD', shared_axes=False)
 
     # Load data for Bitcoin
     df_elon_btc = pd.read_pickle('./data/elon_btc.plk')
@@ -68,7 +68,7 @@ def make_tweeting_price_curve():
 
     # Overlay plots for Bitcoin
     tweeting_price_curve_btc = price_curve_btc * tweeting_point_btc
-    tweeting_price_curve_btc.opts(width=1000, height=400, title='When Elon Musk tweets about Bitcoin', ylabel='Price in $', shared_axes=False)
+    tweeting_price_curve_btc.opts(width=1000, height=400, title='When Elon Musk tweets about Bitcoin', ylabel='Bitcoin Price in USD', shared_axes=False)
 
     # Return tweeting vs price curves
     return tweeting_price_curve_btc, tweeting_price_curve_doge
