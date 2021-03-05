@@ -20,9 +20,9 @@ Silicon Valley tech entrepreneurs tweets (e.g. from Elon Musk, Jack Dorsey etc) 
 A web app (or Chatbot)  where a user can choose to analyse the historical stock/crypto price correlation to what a selected tech entrepreneur has said recently, and get an auto trading strategy based on it.
 
 
-## Workflow
+## User Input
 
-- Fetch data ( Tweets from Twitter API ,Stock/crypto prices and volumes from Yahoo Finance API (minimum hourly data),and Specific time period (start/end date) of the stock/crypto and twitter data or have preset period )  + Clean data  
+- Fetch data ( Tweets from Twitter API ,Stock/crypto prices and volumes from Yahoo Finance API (minimum hourly data),and Specific time period (start/end date) of the stock/crypto and twitter data or have preset period) + Clean data  
 - Process data (including machine learning) and layout for the code(main.py, dashboard)-
     - Wordcloud
     - Key words count
@@ -31,7 +31,7 @@ A web app (or Chatbot)  where a user can choose to analyse the historical stock/
     - Algorithmic trading
         - Random Forest
         - Neural Network
-    -dashboard( Entrepreneur’s name from a drop-down list and Stock/crypto name and/or ticker (e.g. Bitcoin, BTC) )  
+    -dashboard(Entrepreneur’s name from a drop-down list and Stock/crypto name and/or ticker (e.g. Bitcoin, BTC)  
 - Migrate to AWS - TBC
 
 
@@ -47,7 +47,7 @@ A web app (or Chatbot)  where a user can choose to analyse the historical stock/
 
 ## libraries Used
 
-`pandas` , `pathlib` , `hvplot`,  `tensorflow` ,  `sklearn`,`dotenv` , `numpy` , `random `, `os` , `json`, `pickle`,`re` `time` , `bs4 `,`urllib`, `requests`, `datetime`,  `sys` , `collections`
+`pandas` , `pathlib` , `hvplot` , `tensorflow` , `sklearn` , `dotenv` , `numpy` , `random ` , `os` , `json` , `pickle`  , `re` , `time` , `bs4 ` , `urllib` , `requests` , `datetime` , `sys` , `collections`
 
 
 
