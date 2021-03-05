@@ -721,9 +721,9 @@ def load_algo_trading_result_rnn():
 
     # Meke predicted positive return curve
     rnn_predicted_positive_return_curve_doge = result['Predicted Positive Return'].hvplot(
-        title='Predicted Price Rise/Fall for Dogecoin',
+        title='Predicted Price Rise/Fall for Dogecoin (1 for Rise, -1 for Fall)',
         width=1000, height=400,
-        ylabel='Price Rise/Fall (1 for Rise, -1 for Fall)',
+        ylabel='Predicted Price Rise/Fall',
         shared_axes=False
     )
     rnn_predicted_positive_return_curve_doge
@@ -748,9 +748,9 @@ def load_algo_trading_result_rnn():
 
     # Meke predicted positive return curve
     rnn_predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(
-        title='Predicted Price Rise/Fall for Bitcoin',
+        title='Predicted Price Rise/Fall for Bitcoin (1 for Rise, -1 for Fall)',
         width=1000, height=400,
-        ylabel='Price Rise/Fall (1 for Rise, -1 for Fall)',
+        ylabel='Predicted Price Rise/Fall ',
         shared_axes=False
     )
     rnn_predicted_positive_return_curve_btc
@@ -799,9 +799,9 @@ def load_algo_trading_result_rf():
 
     # Meke predicted positive return curve
     rf_predicted_positive_return_curve_doge = result['Predicted Positive Return'].hvplot(
-        title='Predicted Price Rise/Fall for Dogecoin',
+        title='Predicted Price Rise/Fall for Dogecoin (1 for Rise, -1 for Fall)',
         width=1000, height=400,
-        ylabel='Price Rise/Fall (1 for Rise, -1 for Fall)',
+        ylabel='Predicted Price Rise/Fall',
         shared_axes=False
     )
 
@@ -825,9 +825,9 @@ def load_algo_trading_result_rf():
 
     # Meke predicted positive return curve
     rf_predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(
-        title='Predicted Price Rise/Fall for Bitcoin',
+        title='Predicted Price Rise/Fall for Bitcoin (1 for Rise, -1 for Fall)',
         width=1000, height=400,
-        ylabel='Price Rise/Fall (1 for Rise, -1 for Fall)',
+        ylabel='Predicted Price Rise/Fall',
         shared_axes=False
     )
 
