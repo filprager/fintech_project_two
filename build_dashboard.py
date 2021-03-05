@@ -50,6 +50,10 @@ def build_dashboard_btc(
 
         price_curve_btc, 
 #         price_curve_doge,
+
+        # Word cloud
+        '### What Elon Musk recently said about Bitcoin on Twitter',
+        '![Image](https://github.com/filprager/fintech_project_two/blob/main/image/wordcloud_bitcoin.png?raw=true)'
     )
     
     # Content for tab_two
@@ -153,6 +157,10 @@ def build_dashboard_doge(
 
 #         price_curve_btc, 
         price_curve_doge,
+
+        # Word cloud
+        '### What Elon Musk recently said about Dogecoin on Twitter',
+        '![Image](https://github.com/filprager/fintech_project_two/blob/main/image/wordcloud_doge.png?raw=true)'
     )
     
 #     # Content for tab_two
