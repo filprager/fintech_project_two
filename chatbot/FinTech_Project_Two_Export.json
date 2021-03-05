@@ -1,0 +1,476 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "FinTech_Project_Two",
+    "version": "1",
+    "intents": [
+      {
+        "name": "Tweet_tech_entrepreneur",
+        "version": "21",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "I need a tweet by {Tech_Entrepreneur} for {Crypto}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "Crypto",
+            "slotTypeVersion": "2",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "BTC"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "Crypto"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "Tech_Entrepreneur",
+            "slotTypeVersion": "3",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Ellon Musk"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "Tech_Entrepreneur"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "No problem"
+            }
+          ]
+        }
+      },
+      {
+        "name": "crypto_movement",
+        "version": "4",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Did the {Crypto} move up?",
+          "Did the {Crypto} move down?",
+          "Did the {Crypto} move up or down?"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "Crypto",
+            "slotTypeVersion": "2",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "BTC"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "Crypto"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "It moved up"
+            },
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "It moved down"
+            }
+          ]
+        }
+      },
+      {
+        "name": "crypto_movement_sustained_period",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "How long was the upward movement of {Crypto} sustained?",
+          "How long was the downward movement of {Crypto} sustained?"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "Crypto",
+            "slotTypeVersion": "2",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "BTC"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "Crypto"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "The movement lasted xx "
+            }
+          ]
+        }
+      },
+      {
+        "name": "crypto_historical_price",
+        "version": "2",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Can you provide me with historical data on the price of {Crypto}",
+          "What is the historical price of the {Crypto}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "Crypto",
+            "slotTypeVersion": "2",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "historical price data"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "Crypto"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "No problem. Here it is."
+            }
+          ]
+        }
+      },
+      {
+        "name": "crypto_buy_or_sell",
+        "version": "4",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Should I buy or sell?",
+          "Should I hold?"
+        ],
+        "slots": [],
+        "followUpPrompt": {
+          "prompt": {
+            "messages": [
+              {
+                "groupNumber": 1,
+                "contentType": "PlainText",
+                "content": "I recommend holding"
+              },
+              {
+                "groupNumber": 1,
+                "contentType": "PlainText",
+                "content": "I recommend buying"
+              },
+              {
+                "groupNumber": 1,
+                "contentType": "PlainText",
+                "content": "I recommend selling"
+              },
+              {
+                "groupNumber": 2,
+                "contentType": "PlainText",
+                "content": "Is there anything else I can help you with?"
+              }
+            ],
+            "maxAttempts": 3
+          },
+          "rejectionStatement": {
+            "messages": [
+              {
+                "groupNumber": 1,
+                "contentType": "PlainText",
+                "content": "Have a great day!"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "crypto_returns",
+        "version": "3",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "I need the historical returns for {Crypto}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "Crypto",
+            "slotTypeVersion": "2",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "historical returns"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "Crypto"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Sure. Here it is."
+            }
+          ]
+        }
+      },
+      {
+        "name": "greetings",
+        "version": "3",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Hi",
+          "Hello"
+        ],
+        "slots": [],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Hello! What is your name?"
+            }
+          ]
+        }
+      },
+      {
+        "name": "crypto_movement_percentage",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "How much did the {Crypto} move up?",
+          "How much did the {Crypto} move down?"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "Crypto",
+            "slotTypeVersion": "2",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "BTC"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "Crypto"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "It moved XX%"
+            }
+          ]
+        }
+      },
+      {
+        "name": "tweet_sentiment",
+        "version": "4",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Is the tweet positive or negative?",
+          "Is the tweet positive?",
+          "Is the tweet negative?"
+        ],
+        "slots": [],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "It's positive"
+            },
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "It's negative"
+            }
+          ]
+        }
+      },
+      {
+        "name": "introduction",
+        "version": "2",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "My name is {Name}",
+          "I'm {Name}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.FirstName",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Name"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "Name"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "What can I do for you today {Name}?"
+            }
+          ]
+        }
+      }
+    ],
+    "slotTypes": [
+      {
+        "description": "Cryptos",
+        "name": "Crypto",
+        "version": "2",
+        "enumerationValues": [
+          {
+            "value": "Eterium",
+            "synonyms": [
+              "ETC"
+            ]
+          },
+          {
+            "value": "Bitcoin",
+            "synonyms": [
+              "BTC"
+            ]
+          },
+          {
+            "value": "Dogecoin",
+            "synonyms": [
+              "DOGE"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "description": "Tech entrepreneurs",
+        "name": "Tech_Entrepreneur",
+        "version": "3",
+        "enumerationValues": [
+          {
+            "value": "Ellon Musk"
+          },
+          {
+            "value": "Mark Cuban"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      }
+    ],
+    "voiceId": "0",
+    "childDirected": false,
+    "locale": "en-AU",
+    "idleSessionTTLInSeconds": 300,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, can you please repeat that?"
+        }
+      ],
+      "maxAttempts": 5
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Goodbye."
+        }
+      ]
+    },
+    "detectSentiment": true,
+    "nluIntentConfidenceThreshold": 0.4,
+    "enableModelImprovements": true
+  }
+}
