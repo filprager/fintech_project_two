@@ -35,6 +35,10 @@ def analyse(Source, Ticker):
     if Ticker == 'Select Ticker':
         return "Make sure to select a crypto ticker too!"
     
+    # Check if user has selected Google Trends and block Dogecoin
+    if Source == 'Google Trends Data' and Ticker == 'Dogecoin':
+        return "Sorry - Google Trends does not support Dogecoin at present!"
+    
     
     ## Process the data and return plots from the various functions
     # Plots for Price Curve with Tweets marked
