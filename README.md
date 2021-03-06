@@ -54,41 +54,49 @@ A web app (or Chatbot) where a user can choose to analyse the historical crypto 
 
 ## App Output
 
-- A line plot showing Bitcoin's historical price with some markers on the top indicating when Elon Musk tweets something about Bitcoin
+The app has an interface which provides the following output plots across multiple tabs:
 
-- A line plot showing Dogecoin's historical price with some markers on the top indicating when Elon Musk tweets something about Dogecoin
+- General insights plots
+    - tweeting_price_curve_btc
+    - tweeting_price_curve_doge
+    - cumulative_return_curve_btc
+    - cumulative_return_curve_doge
+    - price_curve_btc
+    - price_curve_doge
 
-- A line plot showing Bitcoin's cumulative returns 
+- Plots that show the results of a Random Forest model (Price only)
+    - rf_ema_closing_prices_btc
+    - rf_ema_daily_return_volatility_btc
+    - rf_bollinger_closing_prices_btc
+    - rf_predicted_vs_actual_btc
+    - rf_predicted_vs_actual_last_ten_btc
+    - rf_cumulative_return_btc
+    - rf_ema_closing_prices_doge
+    - rf_ema_daily_return_volatility_doge
+    - rf_bollinger_closing_prices_doge
+    - rf_predicted_vs_actual_doge
+    - rf_predicted_vs_actual_last_ten_doge
+    - rf_cumulative_return_doge
 
-- A line plot showing Dogecoin's cumulative returns 
+- Plots that show the results of a fixed trading strategy (Buy upon relevant Tweet, Sell 24hrs later)
+    - entry_exit_price_plot_btc
+    - entry_exit_portfolio_plot_btc
+    - portfolio_evaluation_table_btc
+    - entry_exit_price_plot_doge
+    - entry_exit_portfolio_plot_doge
+    - portfolio_evaluation_table_doge
 
-- A line plot showing Bitcoin's historical price
+- Plots that show the results of an algorithmic trading based on RNN LSTM (Price + Tweets)
+    - rnn_predicted_positive_return_curve_btc
+    - rnn_cumulative_return_plot_btc
+    - rnn_predicted_positive_return_curve_doge
+    - rnn_cumulative_return_plot_doge
 
-- A line plot showing Dogecoin's historical price 
-
-- Plots that shows results of algorithmic trading based on Random Forest (price only, no tweets)
-
-    - A line plot showing Bitcoin's historical price with some markers on the top indicating buy/sell actions
-
-    - A line plot showing portfolio value of the Bitcoin investment with some markers on the top indicating buy/sell actions
-
-    - A table showing the evaluation results of the performance of the Bitcoin investment portfolio
-
-    - A line plot showing Dogecoin's historical price with some markers on the top indicating buy/sell actions
-
-    - A line plot showing portfolio value of the Dogecoin investment with some markers on the top indicating buy/sell actions
-
-    - A table showing the evaluation results of the performance of the Dogecoin investment portfolio
-
-- Plots that show the results of an algorithmic trading based on RNN LSTM
-
-    - A line plot showing the algo's predictions on whether Bitcoin price will rise or fall in each hour
-
-    - A line plot showing the algo trading's cumulative returns on Bitcoin 
-
-    - A line plot showing the algo's predictions on whether Dogecoin price will rise or fall in each hour
-
-    - A line plot showing the algo trading's cumulative returns on Dogecoin
+- Plots that show the results of an algorithmic trading based on Random Forest (Price + Tweets)
+    - rf_predicted_positive_return_curve_btc
+    - rf_cumulative_return_plot_btc
+    - rf_predicted_positive_return_curve_doge
+    - rf_cumulative_return_plot_doge
 
 
 
