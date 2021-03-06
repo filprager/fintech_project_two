@@ -21,6 +21,7 @@
 ## How to run the app
 
 Option 1 - Type `python3 main.py` in Terminal to launch the dashboard
+
 Option 2 - Copy main.py file into a Jupyter Lab notebook (ipynb) file and run to launch the dashboard
 
 
@@ -98,44 +99,51 @@ The app has an interface which provides the following output plots across multip
     - rf_predicted_positive_return_curve_doge
     - rf_cumulative_return_plot_doge
 
+- Plots that show the results of an algorithmic trading based on RNN LSTM (Price + Google Trends)
+    - google_predicted_positive_return_curve_btc
+    - google_cumulative_return_plot_btc
+
+
 
 
 ## Libraries Used
 
-`pandas` , `pathlib` , `hvplot` , `tensorflow` , `sklearn` , `dotenv` , `numpy` , `random ` , `os` , `json` , `pickle`  , `re` , `time` , `bs4 ` , `urllib` , `requests` , `datetime` , `sys` , `collections`
+`pandas`, `pathlib`, `hvplot`, `tensorflow`, `sklearn`, `dotenv`, `numpy`, `random `, `os`, `json`, `pickle`, `re`, `time`, `bs4 `, `urllib`, `requests`, `datetime`, `sys`, `collections`
 
 
 
 ## APIs Used
 
-`Twitter API `,  `Cryptocompare API`
+`Twitter API `, `Cryptocompare API`
 
 
 
 ## Explanation of Each File and Folder 
 
-- 'main.py' = Main file which co-ordinates the entire app and calls functions in the other .py files (used for launching the app)
+- `main.py` = Main file which co-ordinates the entire app and calls functions in the other .py files (used for launching the app)
 
-- 'retrieve' folder (various files) = Fetches raw data from Twitter and Cryptocompare, and creates Pickle files for processing
+- `retrieve` folder (various files) = Fetches raw data from Twitter and Cryptocompare, and creates Pickle files for processing
 
-- 'clean_data.py' = Processes raw data (Pickle files) into suitable clean dataframes for consumption by machine learning models
+- `clean_data.py` = Processes raw data (Pickle files) into suitable clean dataframes for consumption by machine learning models
 
-- 'algo_trading_rf' = Prepares data and trains model for Random Forest (Price + Tweets)
+- `algo_trading_rf.py` = Prepares data and trains model for Random Forest (Price + Tweets)
 
-- 'algo_trading_rnn' = Prepares data and trains model for Recurrent Neural Network (Price + Tweets)
+- `algo_trading_rnn.py` = Prepares data and trains model for Recurrent Neural Network (Price + Tweets)
 
-- 'model' folder (various files) = Stores RF and RNN models
+- `algo_trading_rnn_googlesearch_vs_coin_price.py` = Prepares data and trains model for Recurrent Neural Network (Price + Google Trends)
 
-- 'data' folder (various files) = Stores model datasets / dataframes (e.g. test and train)
+- `model` folder (various files) = Stores Machine Learning models
 
-- 'process_data.py' = Prepares data and trains model for Random Forest (Price only).  Runs all models and creates plots for Trading Strategies and General Insights
+- `data` folder (various files) = Stores ready-to-use datasets (e.g. clean DataFrames for analysis, algo trading results, etc.)
 
-- 'make_word_cloud.py' = Generates WordCloud images for plotting
+- `process_data.py` = Prepares data and trains model for Random Forest (Price only).  Runs all models and creates plots for Trading Strategies and General Insights
 
-- 'build_dashboard.py' = Creates dashboard layout for Interact function outputs
+- `make_word_cloud.py` = Generates WordCloud images for plotting
 
-- 'chatbot' folder = Contains AWS Chatbot concept model (json)
+- `build_dashboard.py` = Creates dashboard layout for Interact function outputs
 
-- 'image' folder (various files) = Contains WordCloud and ReadMe images
+- `chatbot` folder = Contains AWS Chatbot concept model (json)
+
+- `image` folder (various files) = Contains WordCloud and ReadMe images
 
 
