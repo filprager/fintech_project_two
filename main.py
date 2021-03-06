@@ -15,7 +15,8 @@ from process_data import (
                             make_random_forest, 
                             algo_trading_fixed_strategy, 
                             load_algo_trading_result_rnn, 
-                            load_algo_trading_result_rf
+                            load_algo_trading_result_rf,
+                            load_trading_result_google_search
                         )
 
 # Analyse the correlation between the chosen social source and crypto
@@ -95,6 +96,12 @@ def analyse(Source, Ticker):
         rf_predicted_positive_return_curve_doge, 
         rf_cumulative_return_plot_doge
     ) = load_algo_trading_result_rf()
+
+    # Plots for Google Trends
+    (
+        google_predicted_positive_return_curve_btc, 
+        google_cumulative_return_plot_btc
+    ) = load_trading_result_google_search()
     
     
     ## Create a dashboard (lower half interface in the app) to visualise the plots
