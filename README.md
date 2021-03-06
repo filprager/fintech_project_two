@@ -7,15 +7,15 @@
 
 ## Job description
 
-- Shiva = General Insights (Historical), Word Cloud, ReadMe, Presentation
+- Shiva = General Insights (Historical), Word Cloud, README, Presentation
 
 - Patricia = AWS Lex chatbot, Dashboard Concepts, Presentation
 
 - Marianna = API Data Retrieval (Pickles), Data Processing, Google Trends, Presentation
 
-- Fil = Main App, Data Processing (Random Forest), Dashboard, ReadMe, Presentation
+- Fil = Main App, Data Processing (Random Forest price only), Dashboard, README, Presentation
 
-- Mark = Main App, Data Processing (Fixed, RNN, RF), Read Me, Presentation
+- Mark = Main App, Data Processing (Fixed, RNN, RF), README, Presentation
 
 
 ## How to run the app
