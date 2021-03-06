@@ -1000,6 +1000,7 @@ def load_algo_trading_result_rf():
         shared_axes=False
     )
 
+    
     # ----------------- Bitcoin Section -----------------
 
     # Load rnn algo trading result
@@ -1024,7 +1025,7 @@ def load_algo_trading_result_rf():
         shared_axes=False
     )
 
-    # Retrn plots
+    # Return plots
     return (
         rf_predicted_positive_return_curve_btc, 
         rf_cumulative_return_plot_btc,
@@ -1049,22 +1050,29 @@ def load_trading_result_google_search():
     import pandas as pd
     import hvplot.pandas
 
+    
     # ----------------- Bitcoin Section -----------------
 
     # Load rnn algo trading result
     result = pd.read_pickle('data/rnn_result_btcgoogsearch.plk')
-    result
 
     # Meke predicted positive return curve
-    google_predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(title='Predicted Price Rise/Fall for Bitcoin (1 for Rise, -1 for Fall)')
-    google_predicted_positive_return_curve_btc
+    google_predicted_positive_return_curve_btc = result['Predicted Positive Return'].hvplot(
+        title='Predicted Price Rise/Fall for Bitcoin (1 for Rise, -1 for Fall)',
+        width=1000, height=400,
+        ylabel='Predicted Price Rise/Fall',
+        shared_axes=False
+    )
 
     # Calculate cumulative return of model and plot the result
     cumulative_return = ((1 + (result['WeeklyReturnsShift'] * result['Predicted Positive Return'])).cumprod() -1) * 100
-    cumulative_return
 
-    google_cumulative_return_plot_btc = cumulative_return.hvplot(title=' Investment Performance for Bitcoin', ylabel='%')
-    google_cumulative_return_plot_btc
+    google_cumulative_return_plot_btc = cumulative_return.hvplot(
+        title=' Investment Performance for Bitcoin',
+        width=1000, height=400,
+        ylabel='%',
+        shared_axes=False
+    )
 
-        # Retrn plots
+    # Return plots
     return (google_predicted_positive_return_curve_btc, google_cumulative_return_plot_btc)

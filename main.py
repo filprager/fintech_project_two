@@ -114,13 +114,7 @@ def analyse(Source, Ticker):
     if Source == 'Elon Musk Tweets' and Ticker == 'Bitcoin':
         dashboard = build_dashboard_btc(
                                             tweeting_price_curve_btc, 
-                                            tweeting_price_curve_doge,
-
-                                            cumulative_return_curve_btc, 
-                                            cumulative_return_curve_doge,
-
-                                            price_curve_btc, 
-                                            price_curve_doge,
+                                            cumulative_return_curve_btc,
 
                                             rf_ema_closing_prices_btc,
                                             rf_ema_daily_return_volatility_btc,
@@ -128,49 +122,24 @@ def analyse(Source, Ticker):
                                             rf_predicted_vs_actual_btc,
                                             rf_predicted_vs_actual_last_ten_btc,
                                             rf_cumulative_return_btc,
-                                            rf_ema_closing_prices_doge,
-                                            rf_ema_daily_return_volatility_doge,
-                                            rf_bollinger_closing_prices_doge,
-                                            rf_predicted_vs_actual_doge,
-                                            rf_predicted_vs_actual_last_ten_doge,
-                                            rf_cumulative_return_doge,
 
                                             entry_exit_price_plot_btc,
                                             entry_exit_portfolio_plot_btc,
                                             portfolio_evaluation_table_btc,
-                                            entry_exit_price_plot_doge,
-                                            entry_exit_portfolio_plot_doge,
-                                            portfolio_evaluation_table_doge,
 
                                             rnn_predicted_positive_return_curve_btc, 
                                             rnn_cumulative_return_plot_btc,
-                                            rnn_predicted_positive_return_curve_doge, 
-                                            rnn_cumulative_return_plot_doge,
 
                                             rf_predicted_positive_return_curve_btc, 
-                                            rf_cumulative_return_plot_btc,
-                                            rf_predicted_positive_return_curve_doge, 
-                                            rf_cumulative_return_plot_doge
+                                            rf_cumulative_return_plot_btc
                                         )
 
     
     if Source == 'Elon Musk Tweets' and Ticker == 'Dogecoin':
         dashboard = build_dashboard_doge(
-                                            tweeting_price_curve_btc, 
                                             tweeting_price_curve_doge,
-
-                                            cumulative_return_curve_btc, 
                                             cumulative_return_curve_doge,
 
-                                            price_curve_btc, 
-                                            price_curve_doge,
-
-                                            rf_ema_closing_prices_btc,
-                                            rf_ema_daily_return_volatility_btc,
-                                            rf_bollinger_closing_prices_btc,
-                                            rf_predicted_vs_actual_btc,
-                                            rf_predicted_vs_actual_last_ten_btc,
-                                            rf_cumulative_return_btc,
                                             rf_ema_closing_prices_doge,
                                             rf_ema_daily_return_volatility_doge,
                                             rf_bollinger_closing_prices_doge,
@@ -178,26 +147,22 @@ def analyse(Source, Ticker):
                                             rf_predicted_vs_actual_last_ten_doge,
                                             rf_cumulative_return_doge,
 
-                                            entry_exit_price_plot_btc,
-                                            entry_exit_portfolio_plot_btc,
-                                            portfolio_evaluation_table_btc,
                                             entry_exit_price_plot_doge,
                                             entry_exit_portfolio_plot_doge,
                                             portfolio_evaluation_table_doge,
 
-                                            rnn_predicted_positive_return_curve_btc, 
-                                            rnn_cumulative_return_plot_btc,
                                             rnn_predicted_positive_return_curve_doge, 
                                             rnn_cumulative_return_plot_doge,
 
-                                            rf_predicted_positive_return_curve_btc, 
-                                            rf_cumulative_return_plot_btc,
                                             rf_predicted_positive_return_curve_doge, 
                                             rf_cumulative_return_plot_doge
                                         )
     
     if Source == 'Google Trends Data' and Ticker == 'Bitcoin':
         dashboard = build_dashboard_google_trends_btc(
+                                                        price_curve_btc,
+                                                        cumulative_return_curve_btc, 
+                                                        
                                                         google_predicted_positive_return_curve_btc, 
                                                         google_cumulative_return_plot_btc
                                                     )
