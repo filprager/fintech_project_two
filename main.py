@@ -5,7 +5,8 @@ import panel as pn
 # Import self-made functions
 from build_dashboard import (
                                 build_dashboard_btc,
-                                build_dashboard_doge
+                                build_dashboard_doge,
+                                build_dashboard_google_trends_btc
                             )
 
 from process_data import (
@@ -35,7 +36,7 @@ def analyse(Source, Ticker):
     if Ticker == 'Select Ticker':
         return "Make sure to select a crypto ticker too!"
     
-    # Check if user has selected Google Trends and block Dogecoin
+    # Check if user has selected Google Trends and block Dogecoin (not available at present)
     if Source == 'Google Trends Data' and Ticker == 'Dogecoin':
         return "Sorry - Google Trends does not support Dogecoin at present!"
     
@@ -101,7 +102,7 @@ def analyse(Source, Ticker):
         rf_cumulative_return_plot_doge
     ) = load_algo_trading_result_rf()
 
-    # Plots for Google Trends
+    # Plots for Google Trends BTC
     (
         google_predicted_positive_return_curve_btc, 
         google_cumulative_return_plot_btc
@@ -110,7 +111,7 @@ def analyse(Source, Ticker):
     
     ## Create a dashboard (lower half interface in the app) to visualise the plots
     # Return the dashboard appropriate for the ticker selected by the user
-    if Ticker == 'Bitcoin':
+    if Source == 'Elon Musk Tweets' and Ticker == 'Bitcoin':
         dashboard = build_dashboard_btc(
                                             tweeting_price_curve_btc, 
                                             tweeting_price_curve_doge,
@@ -153,7 +154,7 @@ def analyse(Source, Ticker):
                                         )
 
     
-    if Ticker == 'Dogecoin':
+    if Source == 'Elon Musk Tweets' and Ticker == 'Dogecoin':
         dashboard = build_dashboard_doge(
                                             tweeting_price_curve_btc, 
                                             tweeting_price_curve_doge,
@@ -194,6 +195,13 @@ def analyse(Source, Ticker):
                                             rf_predicted_positive_return_curve_doge, 
                                             rf_cumulative_return_plot_doge
                                         )
+    
+    if Source == 'Google Trends Data' and Ticker == 'Bitcoin':
+        dashboard = build_dashboard_google_trends_btc(
+                                                        google_predicted_positive_return_curve_btc, 
+                                                        google_cumulative_return_plot_btc
+                                                    )
+    
     
     # Return the dashboard
     return dashboard

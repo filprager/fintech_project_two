@@ -234,3 +234,30 @@ def build_dashboard_doge(
     )
     
     return dashboard_doge
+
+
+    # _________________________________________________________________________________________________________________________________________________________ 
+
+
+def build_dashboard_google_trends_btc(
+    google_predicted_positive_return_curve_btc, 
+    google_cumulative_return_plot_btc
+):
+
+    '''
+    Make panel layout for Google Trends BTC
+    Returns: Panel layout
+    '''
+    # Content for tab_one
+    tab_one = pn.Column(
+        google_predicted_positive_return_curve_btc, 
+        google_cumulative_return_plot_btc
+    )
+    
+
+    # Combined dashboard of all tabs
+    dashboard_google_trends_btc = pn.Tabs(
+        ('Google Trends Insights', tab_one)
+    )
+    
+    return dashboard_google_trends_btc
