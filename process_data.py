@@ -552,7 +552,7 @@ def make_random_forest():
 
 def algo_trading_fixed_strategy():
     '''
-    Make plots that show the results of an algorithmic trading based on a fixed staretegy, i.e. buy whenever Elon Musk tweets something about a crypto, and sell after 24 hours.
+    Make plots that show the results of an algorithmic trading based on a fixed strategy, i.e. buy whenever Elon Musk tweets something about a crypto, and sell after 24 hours.
 
     Returns: A tuple of Hvplot objects.
 
