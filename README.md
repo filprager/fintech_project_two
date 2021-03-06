@@ -130,7 +130,7 @@ The app has an interface which provides the following output plots across multip
 
 - `algo_trading_rnn.py` = Prepares data and trains model for Recurrent Neural Network (Price + Tweets)
 
-- `algo_trading_rnn_googlesearch_vs_coin_price.py` = Prepares data and trains model for Recurrent Neural Network (Price + Google Trends)
+- `algo_trading_rnn_google.py` = Prepares data and trains model for Recurrent Neural Network (Price + Google Trends)
 
 - `model` folder (various files) = Stores Machine Learning models
 
