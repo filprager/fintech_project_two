@@ -22,7 +22,7 @@
 
 Option 1 - Type `python3 main.py` in Terminal to launch the dashboard
 
-Option 2 - Copy main.py file into a Jupyter Lab notebook (ipynb) file and run to launch the dashboard
+Option 2 - Copy `main.py` file into a Jupyter Lab notebook (ipynb) file and run to launch the dashboard
 
 
 ## Background
