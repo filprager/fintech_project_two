@@ -42,7 +42,7 @@ big_string = ' '.join(corpus)
 input_text = process_text(big_string)
 
 # Generate the BTC WordCloud
-wc = WordCloud(width=1000, height=1000).generate(input_text)
+wc = WordCloud(width=1000, height=700).generate(input_text)
 plt.imshow(wc)
 plt.axis("off")
 fontdict = {"fontsize": 20, "fontweight": "bold"}
@@ -85,7 +85,7 @@ big_string = ' '.join(corpus)
 input_text = process_text(big_string)
 
 # Generate the Doge WordCloud
-wc = WordCloud(width=1000, height=1000).generate(input_text)
+wc = WordCloud(width=1000, height=700).generate(input_text)
 plt.imshow(wc)
 plt.axis("off")
 fontdict = {"fontsize": 20, "fontweight": "bold"}

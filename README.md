@@ -20,34 +20,66 @@ Silicon Valley tech entrepreneurs tweets (e.g. from Elon Musk, Jack Dorsey etc) 
 A web app (or Chatbot)  where a user can choose to analyse the historical stock/crypto price correlation to what a selected tech entrepreneur has said recently, and get an auto trading strategy based on it.
 
 
-## Workflow
+## User Input
 
-- Fetch data ( Tweets from Twitter API ,Stock/crypto prices and volumes from Yahoo Finance API (minimum hourly data),and Specific time period (start/end date) of the stock/crypto and twitter data or have preset period )  + Clean data  
-- Process data (including machine learning) and layout for the code(main.py, dashboard)-
-    - Wordcloud
-    - Key words count
-    - Sentiment analysis
-    - Correlation analysis
-    - Algorithmic trading
-        - Random Forest
-        - Neural Network
-    -dashboard( Entrepreneur’s name from a drop-down list and Stock/crypto name and/or ticker (e.g. Bitcoin, BTC) )  
-- Migrate to AWS - TBC
 
+- A drop down list consisting two selections :
+
+
+     - Elon Musk Tweets
+
+     - Google Trends Data
+
+- A drop down list for choosing the cryptos given:
+
+
+     - Bitcoin
+
+     - Dogecoin
 
 ## APP Output
-- Present as Wordcloud
-- Historical price curve of the chosen stock/crypto
-- Comparison of different models (e.g. Random Forest vs. Neural Network)
-- An algo trading strategy
-    - A plot showing long/short signals
-    - A plot showing cumulative returns
-    - A table showing pottfolio metrics
+
+- A line plot showing Bitcoin's historical price with some markers on the top indicating when Elon Musk tweets something about Bitcoin
+
+- A line plot showing Dogecoin's historical price with some markers on the top indicating when Elon Musk tweets something about Dogecoin
+
+-  A line plot showing Bitcoin's cumulative returns 
+
+- A line plot showing Dogecoin's cumulative returns 
+
+- A line plot showing Bitcoin's historical price
+
+- A line plot showing Dogecoin's historical price 
+
+- Plots that shows results of algorithmic trading based on   Random Forest (price only, no tweets)
+
+- A line plot showing Bitcoin's historical price with some markers on the top indicating buy/sell actions
+
+- A line plot showing portfolio value of the Bitcoin investment with some markers on the top indicating buy/sell actions
+
+- A table showing the evaluation results of the performance of the Bitcoin investment portfolio
+
+- A line plot showing Dogecoin's historical price with some markers on the top indicating buy/sell actions
+
+- A line plot showing portfolio value of the Dogecoin investment with some markers on the top indicating buy/sell actions
+
+- A table showing the evaluation results of the performance of the Dogecoin investment portfolio
+
+- Plots that show the results of an algorithmic trading based on RNN LSTM
+
+- A line plot showing the algo's predictions on whether Bitcoin price will rise or fall in each hour
+- A line plot showing the algo trading's cumulative returns on Bitcoin 
+
+- A line plot showing the algo's predictions on whether Dogecoin price will rise or fall in each hour
+
+- A line plot showing the algo trading's cumulative returns on Dogecoin
+
+
 
 
 ## libraries Used
 
-`pandas` , `pathlib` , `hvplot`,  `tensorflow` ,  `sklearn`,`dotenv` , `numpy` , `random `, `os` , `json`, `pickle`,`re` `time` , `bs4 `,`urllib`, `requests`, `datetime`,  `sys` , `collections`
+`pandas` , `pathlib` , `hvplot` , `tensorflow` , `sklearn` , `dotenv` , `numpy` , `random ` , `os` , `json` , `pickle`  , `re` , `time` , `bs4 ` , `urllib` , `requests` , `datetime` , `sys` , `collections`
 
 
 
